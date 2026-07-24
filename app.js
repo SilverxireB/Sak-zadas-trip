@@ -116,6 +116,10 @@
   });
   var hash = location.hash.replace("#", "");
   if (hash && $("#panel-" + hash)) showPanel("panel-" + hash);
+  window.addEventListener("hashchange", function () {
+    var h = location.hash.replace("#", "");
+    if (h && $("#panel-" + h)) showPanel("panel-" + h);
+  });
 
   /* ---------- gün planı A/B ---------- */
   $all(".seg button").forEach(function (b) {
