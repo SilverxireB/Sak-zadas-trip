@@ -11,6 +11,11 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800&family=Figtree:ital,wght@0,400;0,600;0,700;1,400&display=swap&subset=latin-ext" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Sakız '26">
 </head>
 <body>
 
@@ -58,13 +63,22 @@
 <!-- ================= PANEL: PLAN ================= -->
 <section class="panel active" id="panel-plan">
 
+  <div class="now-banner" id="nowBanner" hidden></div>
+
+  <div class="card weather" id="weatherCard" hidden>
+    <h4>🌤️ Sakız'da hava</h4>
+    <div class="wx-strip" id="wxStrip"></div>
+    <p class="meta" id="wxNote"></p>
+  </div>
+
   <div class="section-head">
     <span class="kicker">Yolculuk künyesi</span>
     <h3>Her şey ayarlandı</h3>
     <div class="xysta-zigzag" aria-hidden="true"></div>
   </div>
 
-  <div class="card">
+  <div class="card" id="card-ferry">
+    <span class="card-art"><img src="images/ferry.jpg" alt="Sakız limanı — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <h4>⛴️ Feribot — Çeşme → Sakız</h4>
     <span class="big-time" id="ferryDepart">09:00</span>
     <p class="meta" id="ferryMeta"></p>
@@ -237,23 +251,8 @@
     <div class="xysta-zigzag" aria-hidden="true"></div>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#dff0f5"/>
-      <circle cx="345" cy="26" r="16" fill="#e79a2e"/>
-      <rect y="46" width="400" height="34" fill="#8ecadd"/>
-      <rect y="60" width="400" height="20" fill="#3c8bab"/>
-      <path d="M0 78 Q100 66 200 78 T400 78 V120 H0Z" fill="#ecd9a8"/>
-      <path d="M150 96 L150 44" stroke="#0e3a52" stroke-width="3"/>
-      <path d="M116 52 A38 38 0 0 1 184 52 Z" fill="#c9302c"/>
-      <path d="M116 52 A38 38 0 0 1 150 44 L150 52 Z" fill="#f6f3ea"/>
-      <path d="M150 44 A38 38 0 0 1 184 52 L150 52 Z" fill="#f6f3ea" opacity="0"/>
-      <path d="M133 46 A38 38 0 0 1 167 46 L150 52 Z" fill="#f6f3ea"/>
-      <ellipse cx="205" cy="100" rx="26" ry="7" fill="#e2c98f"/>
-      <path d="M196 100 l6 -12 h10 l6 12 Z" fill="#16688a"/>
-      <circle cx="250" cy="98" r="6" fill="#c9302c"/>
-      <path d="M60 30 q6 -6 12 0 q6 -6 12 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-karfas">
+    <span class="card-art"><img src="images/karfas.jpg" alt="Karfas plajı — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <div class="beach-head"><h4>🏖️ Karfas</h4><span class="drops" aria-label="5 üzerinden 5">🌢🌢🌢🌢🌢</span></div>
     <p class="meta">Evimizin önündeki plaj. Yumuşak kum, diz boyu ilerleyen sığ deniz — 2 yaş için adanın en iyisi.</p>
     <div class="beach-facts">
@@ -262,25 +261,8 @@
     <a class="btn ghost" href="https://maps.google.com/?q=Karfas+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#dff0f5"/>
-      <circle cx="52" cy="24" r="14" fill="#e79a2e"/>
-      <rect y="42" width="400" height="30" fill="#8ecadd"/>
-      <rect y="56" width="400" height="16" fill="#3c8bab"/>
-      <path d="M0 72 Q120 62 240 72 T400 70 V120 H0Z" fill="#ecd9a8"/>
-      <g fill="#e2c98f" stroke="#c9a95f" stroke-width="2">
-        <rect x="170" y="70" width="60" height="26"/>
-        <rect x="182" y="52" width="16" height="18"/>
-        <rect x="212" y="56" width="14" height="14"/>
-      </g>
-      <path d="M182 52 l8 -8 8 8 Z M212 56 l7 -7 7 7 Z" fill="#c9302c"/>
-      <rect x="187" y="80" width="8" height="10" fill="#0e3a52"/>
-      <path d="M300 92 h56 M306 92 v-16 h44 v16" stroke="#16688a" stroke-width="3" fill="none"/>
-      <path d="M300 76 h56 l-5 -9 h-46 Z" fill="#c9302c"/>
-      <circle cx="94" cy="90" r="7" fill="#e79a2e"/>
-      <path d="M255 34 q6 -6 12 0 q6 -6 12 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-komi">
+    <span class="card-art"><img src="images/komi.jpg" alt="Komi plajı — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <div class="beach-head"><h4>🏖️ Komi</h4><span class="drops" aria-label="5 üzerinden 5">🌢🌢🌢🌢🌢</span></div>
     <p class="meta">Güneyin uzun kumsalı. Sığ, dalgasız, arkası taverna dolu — 2. günün plaj yıldızı.</p>
     <div class="beach-facts">
@@ -289,24 +271,8 @@
     <a class="btn ghost" href="https://maps.google.com/?q=Komi+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#cfe9f0"/>
-      <path d="M0 58 L70 12 L130 58 Z" fill="#8a8378"/>
-      <path d="M270 58 L340 6 L400 44 V58 Z" fill="#6f695f"/>
-      <rect y="52" width="400" height="34" fill="#16688a"/>
-      <rect y="66" width="400" height="20" fill="#0e3a52"/>
-      <path d="M0 84 Q100 74 200 84 T400 84 V120 H0Z" fill="#37322d"/>
-      <g fill="#23201d">
-        <ellipse cx="60" cy="100" rx="14" ry="8"/><ellipse cx="110" cy="108" rx="16" ry="9"/>
-        <ellipse cx="170" cy="98" rx="12" ry="7"/><ellipse cx="230" cy="106" rx="17" ry="9"/>
-        <ellipse cx="295" cy="99" rx="13" ry="8"/><ellipse cx="350" cy="108" rx="15" ry="8"/>
-      </g>
-      <g fill="#4a443d">
-        <ellipse cx="88" cy="94" rx="8" ry="5"/><ellipse cx="205" cy="93" rx="7" ry="4"/><ellipse cx="325" cy="92" rx="8" ry="5"/>
-      </g>
-      <path d="M40 60 q7 -7 14 0 q7 -7 14 0 M300 62 q7 -7 14 0" stroke="#8ecadd" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-mavra">
+    <span class="card-art"><img src="images/mavra-volia.jpg" alt="Mavra Volia siyah plajı — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <div class="beach-head"><h4>🌑 Mavra Volia</h4><span class="drops" aria-label="5 üzerinden 3">🌢🌢🌢<span class="off">🌢🌢</span></span></div>
     <p class="meta">Adanın imzası: volkanik siyah çakıllar + kobalt mavisi su. Manzara 10/10; deniz çabuk derinleşir.</p>
     <div class="beach-facts">
@@ -315,24 +281,8 @@
     <a class="btn ghost" href="https://maps.google.com/?q=Mavra+Volia+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#fbe3c0"/>
-      <circle cx="200" cy="54" r="20" fill="#e79a2e"/>
-      <rect y="54" width="400" height="36" fill="#c97f14" opacity="0.35"/>
-      <rect y="54" width="400" height="36" fill="#3c8bab"/>
-      <rect y="74" width="400" height="16" fill="#16688a"/>
-      <path d="M0 90 Q120 82 260 90 T400 88 V120 H0Z" fill="#ecd9a8"/>
-      <path d="M60 78 q20 12 40 0 l-4 8 h-32 Z" fill="#f6f3ea"/>
-      <path d="M80 66 v12" stroke="#0e3a52" stroke-width="2.5"/>
-      <path d="M80 66 l14 6 -14 4 Z" fill="#c9302c"/>
-      <g stroke="#16688a" stroke-width="3" fill="none">
-        <path d="M280 100 h70 M288 100 v-14 h54 v14"/>
-      </g>
-      <path d="M276 86 h78 l-6 -10 h-66 Z" fill="#567f5b"/>
-      <path d="M305 106 c6 -4 12 -4 18 0 M310 104 l-4 4 M319 104 l4 4" stroke="#0e3a52" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M140 60 q6 -6 12 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-lithi">
+    <span class="card-art"><img src="images/lithi.jpg" alt="Lithi koyu — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <div class="beach-head"><h4>🐟 Lithi</h4><span class="drops" aria-label="5 üzerinden 4">🌢🌢🌢🌢<span class="off">🌢</span></span></div>
     <p class="meta">Batı kıyısının sakin, kumlu koyu. Plajın dibinde balık tavernaları — öğle yemeği + deniz kombosu.</p>
     <div class="beach-facts">
@@ -341,26 +291,8 @@
     <a class="btn ghost" href="https://maps.google.com/?q=Lithi+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#dff0f5"/>
-      <circle cx="60" cy="26" r="14" fill="#e79a2e"/>
-      <rect y="48" width="400" height="30" fill="#8ecadd"/>
-      <rect y="62" width="400" height="16" fill="#3c8bab"/>
-      <path d="M0 78 Q120 70 240 78 T400 76 V120 H0Z" fill="#efe8d8"/>
-      <g fill="#f6f3ea" stroke="#d8d0be" stroke-width="1.5">
-        <ellipse cx="70" cy="100" rx="12" ry="6"/><ellipse cx="130" cy="108" rx="14" ry="7"/>
-        <ellipse cx="200" cy="98" rx="11" ry="6"/><ellipse cx="270" cy="106" rx="13" ry="7"/>
-        <ellipse cx="340" cy="100" rx="12" ry="6"/>
-      </g>
-      <g>
-        <rect x="280" y="42" width="44" height="34" fill="#f6f3ea" stroke="#d8d0be" stroke-width="1.5"/>
-        <path d="M276 42 h52 l-26 -16 Z" fill="#16688a"/>
-        <path d="M302 20 v-8 M298 16 h8" stroke="#0e3a52" stroke-width="2.5" stroke-linecap="round"/>
-        <rect x="296" y="58" width="12" height="18" fill="#16688a"/>
-      </g>
-      <path d="M150 54 q6 -6 12 0 q6 -6 12 0" stroke="#fff" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-agiafotini">
+    <span class="card-art"><img src="images/agia-fotini.jpg" alt="Agia Fotini koyu — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <div class="beach-head"><h4>🤍 Agia Fotini</h4><span class="drops" aria-label="5 üzerinden 4">🌢🌢🌢🌢<span class="off">🌢</span></span></div>
     <p class="meta">Karfas'ın 10 dk güneyinde, beyaz çakıllı, berrak sulu sakin koy. Karfas kalabalık gelirse B planı.</p>
     <div class="beach-facts">
@@ -369,18 +301,8 @@
     <a class="btn ghost" href="https://maps.google.com/?q=Agia+Fotini+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#dff0f5"/>
-      <circle cx="200" cy="22" r="13" fill="#e79a2e"/>
-      <rect y="56" width="400" height="64" fill="#2a9bb5"/>
-      <path d="M0 120 V30 Q60 38 90 64 Q120 92 110 120 Z" fill="#efe8d8"/>
-      <path d="M400 120 V26 Q330 36 305 62 Q282 90 292 120 Z" fill="#e6dcc6"/>
-      <path d="M150 108 Q200 96 252 108 V120 H150 Z" fill="#f6f3ea"/>
-      <path d="M56 40 l12 8 -14 6 12 8 -14 6 12 8" stroke="#c9a95f" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <path d="M180 70 q7 -7 14 0 M220 78 q7 -7 14 0" stroke="#bfeaf2" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <path d="M240 40 q5 4 0 8 M250 36 q5 4 0 8" stroke="#0e3a52" stroke-width="2" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-vroulidia">
+    <span class="card-art"><img src="images/vroulidia.jpg" alt="Vroulidia koyları — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <div class="beach-head"><h4>🕵️ Vroulidia</h4><span class="drops" aria-label="5 üzerinden 2">🌢🌢<span class="off">🌢🌢🌢</span></span></div>
     <p class="meta">Adanın güney ucunda saklı mini koy — beyaz çakıl, turkuaz su. Merdivenle iniliyor; büyük çocuklarla kısa macera, puset gelemez.</p>
     <div class="beach-facts">
@@ -403,109 +325,69 @@
 <!-- ================= PANEL: KEŞİF ================= -->
 <section class="panel" id="panel-explore">
   <div class="section-head">
+    <span class="kicker">Ada haritası</span>
+    <h3>Nereye dokunursan oraya</h3>
+    <p class="lede">Noktalara dokun — ilgili karta götürür. Yeşil: köy & keşif, mavi: plaj.</p>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card map-card">
+    <svg id="islandMap" viewBox="0 0 300 500" role="group" aria-label="Sakız Adası haritası">
+      <path d="M161,39 C185,42 196,70 203,96 C216,130 238,168 246,201 C250,225 248,240 249,258
+               C251,278 254,292 250,306 C244,330 228,345 217,363 C205,388 192,405 182,420
+               C177,428 173,431 169,435 C160,448 152,462 146,473 C134,470 120,466 111,459
+               C96,436 78,392 68,364 C74,344 92,322 104,310 C114,300 124,292 133,287
+               C112,268 84,232 74,205 C68,172 82,132 96,110 C112,80 138,50 161,39 Z"
+            fill="#e6eedd" stroke="#567f5b" stroke-width="3" stroke-linejoin="round"/>
+      <text x="150" y="150" text-anchor="middle" class="map-label-big">SAKIZ</text>
+      <g class="map-dot sea" data-target="card-ferry" data-panel="panel-plan"><circle cx="243" cy="258" r="9"/><text x="230" y="252">Liman ⛴️</text></g>
+      <g class="map-dot sea" data-target="card-karfas" data-panel="panel-beach"><circle cx="243" cy="306" r="9"/><text x="230" y="310">Karfas 🏠</text></g>
+      <g class="map-dot sea" data-target="card-agiafotini" data-panel="panel-beach"><circle cx="234" cy="330" r="9"/><text x="222" y="348">A. Fotini</text></g>
+      <g class="map-dot sea" data-target="card-komi" data-panel="panel-beach"><circle cx="182" cy="419" r="9"/><text x="196" y="415">Komi</text></g>
+      <g class="map-dot sea" data-target="card-mavra" data-panel="panel-beach"><circle cx="166" cy="440" r="9"/><text x="180" y="447">M. Volia</text></g>
+      <g class="map-dot sea" data-target="card-vroulidia" data-panel="panel-beach"><circle cx="146" cy="466" r="9"/><text x="140" y="488">Vroulidia</text></g>
+      <g class="map-dot sea" data-target="card-lithi" data-panel="panel-beach"><circle cx="130" cy="288" r="9"/><text x="88" y="282">Lithi</text></g>
+      <g class="map-dot" data-target="card-pyrgi" data-panel="panel-explore"><circle cx="146" cy="395" r="9"/><text x="112" y="390">Pyrgi</text></g>
+      <g class="map-dot" data-target="card-mesta" data-panel="panel-explore"><circle cx="89" cy="363" r="9"/><text x="56" y="352">Mesta</text></g>
+      <g class="map-dot" data-target="card-anavatos" data-panel="panel-explore"><circle cx="140" cy="228" r="9"/><text x="98" y="222">Anavatos</text></g>
+      <g class="map-dot" data-target="card-neamoni" data-panel="panel-explore"><circle cx="176" cy="254" r="9"/><text x="188" y="248">Nea Moni</text></g>
+      <g class="map-dot" data-target="card-daskalopetra" data-panel="panel-explore"><circle cx="238" cy="207" r="9"/><text x="176" y="200">Daskalopetra</text></g>
+    </svg>
+  </div>
+
+  <div class="section-head">
     <span class="kicker">Köyler & yerler</span>
     <h3>Adanın masal tarafı</h3>
     <p class="lede">Sakız'ın köyleri korsanlara karşı labirent gibi kurulmuş — çocuklara "kale köyler" diye anlatın, keşif oyuna dönsün.</p>
     <div class="xysta-zigzag" aria-hidden="true"></div>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#dff0f5"/>
-      <rect x="40" y="24" width="150" height="96" fill="#f6f3ea" stroke="#23201d" stroke-width="2"/>
-      <g fill="#23201d">
-        <path d="M40 24 h150 v14 h-150 Z" opacity="0.9"/>
-        <path d="M48 52 l10 -12 10 12 Z M76 52 l10 -12 10 12 Z M104 52 l10 -12 10 12 Z M132 52 l10 -12 10 12 Z M160 52 l10 -12 10 12 Z"/>
-        <path d="M44 66 h142 v6 h-142 Z"/>
-        <circle cx="60" cy="88" r="7"/><circle cx="88" cy="88" r="7"/><circle cx="144" cy="88" r="7"/><circle cx="172" cy="88" r="7"/>
-        <path d="M48 104 l8 8 8 -8 8 8 8 -8 8 8 8 -8 8 8 8 -8 8 8 8 -8 8 8 8 -8 8 8 8 -8 8 8 8 -8" stroke="#23201d" stroke-width="2.5" fill="none"/>
-      </g>
-      <rect x="103" y="78" width="24" height="42" fill="#16688a"/>
-      <rect x="210" y="40" width="120" height="80" fill="#efe8d8" stroke="#23201d" stroke-width="2"/>
-      <rect x="224" y="56" width="30" height="24" fill="#0e3a52"/>
-      <rect x="280" y="56" width="30" height="24" fill="#0e3a52"/>
-      <path d="M222 92 h96" stroke="#23201d" stroke-width="3"/>
-      <g stroke="#c9302c" stroke-width="2.5" stroke-linecap="round">
-        <path d="M238 92 v14 M246 92 v18 M254 92 v12"/>
-      </g>
-      <circle cx="238" cy="108" r="4" fill="#c9302c"/><circle cx="246" cy="112" r="4" fill="#c9302c"/><circle cx="254" cy="106" r="4" fill="#c9302c"/>
-      <circle cx="360" cy="26" r="13" fill="#e79a2e"/>
-    </svg></span>
+  <div class="card" id="card-pyrgi">
+    <span class="card-art"><img src="images/pyrgi.jpg" alt="Pyrgi köyü — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <h4>🖤 Pyrgi — desenli köy</h4>
     <p class="meta">Evleri gri-beyaz geometrik desenlerle kazınmış ("ksista" tekniği) — Yunanistan'da başka örneği yok. Meydanda domatesler balkonlardan sarkar, kahveler meydanı izler.</p>
     <div class="beach-facts"><span class="tag">2. gün rotasında</span><span class="tag sea">Karfas'a 40 dk</span><span class="tag">Puset kısmen OK</span></div>
     <a class="btn ghost" href="https://maps.google.com/?q=Pyrgi+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#efe8d8"/>
-      <rect x="0" y="0" width="120" height="120" fill="#d9cfb8"/>
-      <rect x="280" y="0" width="120" height="120" fill="#d9cfb8"/>
-      <path d="M120 120 V50 Q200 -14 280 50 V120 Z" fill="#dff0f5"/>
-      <path d="M120 120 V50 Q200 -14 280 50 V120" fill="none" stroke="#8a8378" stroke-width="6"/>
-      <path d="M150 120 V72 Q200 30 250 72 V120" fill="none" stroke="#a89f8c" stroke-width="5"/>
-      <g fill="#8a8378">
-        <rect x="0" y="20" width="120" height="5"/><rect x="0" y="52" width="120" height="5"/><rect x="0" y="84" width="120" height="5"/>
-        <rect x="280" y="20" width="120" height="5"/><rect x="280" y="52" width="120" height="5"/><rect x="280" y="84" width="120" height="5"/>
-      </g>
-      <rect x="40" y="60" width="26" height="34" fill="#567f5b"/>
-      <rect x="330" y="60" width="26" height="34" fill="#16688a"/>
-      <path d="M175 120 v-26 h50 v26" fill="#8a8378"/>
-      <path d="M175 94 a25 18 0 0 1 50 0" fill="#6f695f"/>
-      <path d="M188 70 q12 -14 24 0" stroke="#c9302c" stroke-width="3" fill="none" stroke-linecap="round"/>
-      <circle cx="200" cy="52" r="5" fill="#e79a2e"/>
-    </svg></span>
+  <div class="card" id="card-mesta">
+    <span class="card-art"><img src="images/mesta.jpg" alt="Mesta köyü — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <h4>🌀 Mesta — labirent köy</h4>
     <p class="meta">Taş kemerli sokaklar birbirine öyle dolanır ki köyün kendisi bir bulmaca. Ortadaki meydanda Taksiarhis Kilisesi ve gölgeli tavernalar. Kaybolmak serbest — zaten plan bu.</p>
     <div class="beach-facts"><span class="tag">2. gün Plan B</span><span class="tag warn">Taş zemin — taşıyıcı iyi olur</span></div>
     <a class="btn ghost" href="https://maps.google.com/?q=Mesta+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#f3e8d2"/>
-      <circle cx="60" cy="26" r="14" fill="#e79a2e"/>
-      <path d="M400 120 H80 Q120 92 150 66 Q200 22 250 34 Q320 48 360 86 Q385 106 400 120 Z" fill="#b3a488"/>
-      <g fill="#8a8378" stroke="#6f695f" stroke-width="1.5">
-        <rect x="196" y="34" width="26" height="24"/>
-        <rect x="230" y="44" width="30" height="26"/>
-        <rect x="170" y="56" width="28" height="26"/>
-        <rect x="206" y="66" width="32" height="26"/>
-        <rect x="246" y="76" width="28" height="24"/>
-        <rect x="152" y="86" width="30" height="24"/>
-      </g>
-      <g fill="#3f3a33">
-        <rect x="204" y="40" width="8" height="10"/><rect x="240" y="50" width="8" height="10"/>
-        <rect x="178" y="62" width="8" height="10"/><rect x="216" y="72" width="8" height="10"/>
-      </g>
-      <path d="M96 34 q5 4 10 0 M116 24 q5 4 10 0 M300 24 q5 4 10 0" stroke="#0e3a52" stroke-width="2" fill="none" stroke-linecap="round"/>
-      <path d="M40 108 q10 -16 0 -30 M40 78 l-8 10 M40 78 l8 10" stroke="#567f5b" stroke-width="3" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-anavatos">
+    <span class="card-art"><img src="images/anavatos.jpg" alt="Anavatos kayalık tepesi — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <h4>🏰 Anavatos — hayalet köy</h4>
     <p class="meta">Kayalık bir tepeye yapışmış, terk edilmiş taş köy. Uzaktan kayadan ayırt edilmiyor. Adanın en etkileyici manzarası — sabah serinliğinde gidilir.</p>
     <div class="beach-facts"><span class="tag">3. gün Plan A</span><span class="tag warn">Dik patika — 2 yaş taşıyıcıda</span></div>
     <a class="btn ghost" href="https://maps.google.com/?q=Anavatos+Chios" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#f5e6c4"/>
-      <circle cx="200" cy="120" r="150" fill="#efd9a8" opacity="0.6"/>
-      <g fill="#567f5b">
-        <path d="M60 120 q-14 -50 0 -76 q14 26 0 76 Z"/>
-        <path d="M340 120 q-14 -50 0 -76 q14 26 0 76 Z"/>
-        <path d="M100 120 q-10 -36 0 -54 q10 18 0 54 Z"/>
-      </g>
-      <rect x="150" y="66" width="100" height="54" fill="#e8ddc4" stroke="#b3a488" stroke-width="2"/>
-      <path d="M160 66 a40 26 0 0 1 80 0 Z" fill="#c9302c"/>
-      <rect x="188" y="30" width="24" height="20" fill="#e8ddc4" stroke="#b3a488" stroke-width="2"/>
-      <path d="M186 30 a14 10 0 0 1 28 0 Z" fill="#c9302c"/>
-      <path d="M200 22 v-10 M195 16 h10" stroke="#e79a2e" stroke-width="3" stroke-linecap="round"/>
-      <path d="M186 92 a14 14 0 0 1 28 0 V120 h-28 Z" fill="#0e3a52"/>
-      <circle cx="170" cy="84" r="7" fill="#e79a2e"/>
-      <circle cx="230" cy="84" r="7" fill="#e79a2e"/>
-    </svg></span>
+  <div class="card" id="card-neamoni">
+    <span class="card-art"><img src="images/nea-moni.jpg" alt="Nea Moni manastırı ve dağlar — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <h4>✨ Nea Moni — 1000 yıllık manastır</h4>
     <p class="meta">Bizans döneminden kalma UNESCO Dünya Mirası; altın mozaikleri Türkiye'deki Ayasofya ustalarının çağdaşları yapmış. Kısa ziyaret, büyük etki.</p>
     <div class="beach-facts"><span class="tag">3. gün Plan A</span><span class="tag">Omuzlar kapalı — şal alın</span></div>
@@ -539,19 +421,8 @@
     <a class="btn ghost" href="https://maps.google.com/?q=Chios+Mastic+Museum" target="_blank" rel="noopener">📍 Haritada</a>
   </div>
 
-  <div class="card">
-    <span class="card-art" aria-hidden="true"><svg viewBox="0 0 400 120" role="img">
-      <rect width="400" height="120" fill="#dff0f5"/>
-      <circle cx="330" cy="24" r="14" fill="#e79a2e"/>
-      <rect y="70" width="400" height="50" fill="#3c8bab"/>
-      <rect y="88" width="400" height="32" fill="#16688a"/>
-      <path d="M40 120 V80 Q44 54 80 50 Q130 46 140 70 Q148 88 140 120 Z" fill="#8a8378"/>
-      <ellipse cx="92" cy="46" rx="34" ry="10" fill="#6f695f"/>
-      <path d="M92 40 v-16 M84 26 q8 -8 16 0" stroke="#0e3a52" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-      <rect x="200" y="52" width="56" height="36" rx="4" fill="#f6f3ea" stroke="#c9a95f" stroke-width="2"/>
-      <path d="M208 62 h40 M208 70 h40 M208 78 h28" stroke="#8a7a52" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M180 96 q7 -7 14 0 M290 100 q7 -7 14 0 M240 104 q7 -7 14 0" stroke="#8ecadd" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-    </svg></span>
+  <div class="card" id="card-daskalopetra">
+    <span class="card-art"><img src="images/daskalopetra.jpg" alt="Daskalopetra kıyısı — uydu görüntüsü" width="1200" height="400" loading="lazy"></span>
     <h4>🗿 Daskalopetra — Homeros'un Kayası</h4>
     <p class="meta">Rivayete göre Homeros öğrencilerine bu kayanın üstünde ders verirdi. Deniz kenarında kısa bir durak; İlyada'yı yazan adamın "sınıfında" fotoğraf çektirilir.</p>
     <div class="beach-facts"><span class="tag">1. gün Plan B</span><span class="tag sea">Chios Town'a 15 dk</span></div>
@@ -675,7 +546,7 @@
   <div class="card">
     <h4>💶 Para & pratik</h4>
     <ul>
-      <li>Para birimi <strong>Euro</strong>; kart yaygın ama köy tavernaları için <strong>nakit</strong> bulunsun.</li>
+      <li>💶 <strong>Nakit durumu: toplam ~100 €</strong> — köy tavernası, plaj büfesi gibi "sadece nakit" yerlere saklayın. Gerisi dert değil: kredi kartı her yerde sorunsuz geçiyor.</li>
       <li>Araç depozitosu (868 €) için <strong>Gizem adına, üzerinde numarası yazılı fiziksel kart</strong> — limiti kontrol edin.</li>
       <li>Saat farkı yok — yazın Yunanistan ve Türkiye aynı saatte. 🎉</li>
       <li>Telefon: yurt dışı paketi alın ya da ev + taverna wifi'ı; sınırda otomatik Yunan operatörüne geçer.</li>
@@ -716,6 +587,7 @@
   <div class="xysta on-dark flip" aria-hidden="true" style="margin:-26px -16px 18px"></div>
   <p class="fam">Baharözü & Karagöz kafilesi · Sakız Adası 2026</p>
   <p>İki aile, üç çocuk, bir ada — hatıralar burada başlar. 🌊</p>
+  <p style="opacity:0.6;font-size:0.75rem">Uydu görüntüleri © Google · Hava durumu: Open-Meteo</p>
 </footer>
 
 <nav class="tabbar" aria-label="Bölümler">

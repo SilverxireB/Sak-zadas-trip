@@ -256,6 +256,122 @@
     toast("Liste sıfırlandı.");
   });
 
+  /* ---------- ada haritası navigasyonu ---------- */
+  $all(".map-dot").forEach(function (dot) {
+    dot.setAttribute("tabindex", "0");
+    dot.setAttribute("role", "button");
+    function go() {
+      var target = dot.dataset.target, panel = dot.dataset.panel;
+      showPanel(panel);
+      var card = $("#" + target);
+      if (!card) return;
+      setTimeout(function () {
+        card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+        card.classList.remove("flash");
+        void card.offsetWidth;
+        card.classList.add("flash");
+      }, 60);
+    }
+    dot.addEventListener("click", go);
+    dot.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+  });
+
+  /* ---------- hava durumu (Open-Meteo, anahtarsız) ---------- */
+  (function weather() {
+    var WKEY = "sakiz26-wx";
+    var DAY_NAMES = ["Paz", "Pzt", "Sal", "Çar", "Per", "Cum", "Cmt"];
+    var ICONS = [
+      [0, "☀️"], [1, "🌤️"], [2, "⛅"], [3, "☁️"], [45, "🌫️"], [48, "🌫️"],
+      [51, "🌦️"], [61, "🌧️"], [80, "🌧️"], [95, "⛈️"]
+    ];
+    function icon(code) {
+      var best = "☀️";
+      ICONS.forEach(function (p) { if (code >= p[0]) best = p[1]; });
+      return best;
+    }
+    function render(data) {
+      var d = data.daily;
+      if (!d || !d.time) return;
+      var html = "";
+      for (var i = 0; i < Math.min(3, d.time.length); i++) {
+        var date = new Date(d.time[i] + "T12:00:00");
+        var label = date.getDate() + " Tem · " + DAY_NAMES[date.getDay()];
+        html += "<div class='wx-day'><div class='d'>" + label + "</div>" +
+          "<div class='i'>" + icon(d.weather_code[i]) + "</div>" +
+          "<div class='tt'>" + Math.round(d.temperature_2m_max[i]) + "°</div>" +
+          "<div class='tn'>gece " + Math.round(d.temperature_2m_min[i]) + "°</div>" +
+          "<div class='w'>💨 " + Math.round(d.wind_speed_10m_max[i]) + " km/s</div></div>";
+      }
+      $("#wxStrip").innerHTML = html;
+      $("#wxNote").textContent = "Deniz zaten harika olacak — rüzgâr 20 km/s üstüyse feribotta üst güverte serin olur.";
+      $("#weatherCard").hidden = false;
+    }
+    try {
+      var cached = JSON.parse(localStorage.getItem(WKEY) || "null");
+      if (cached && Date.now() - cached.at < 3 * 3600 * 1000) render(cached.data);
+    } catch (e) {}
+    var url = "https://api.open-meteo.com/v1/forecast?latitude=38.37&longitude=26.14" +
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max" +
+      "&timezone=Europe%2FAthens&start_date=2026-07-26&end_date=2026-07-28";
+    if (Date.now() > new Date("2026-07-13").getTime() && Date.now() < tripEnd) {
+      fetch(url).then(function (r) { return r.json(); }).then(function (data) {
+        render(data);
+        localStorage.setItem(WKEY, JSON.stringify({ at: Date.now(), data: data }));
+      }).catch(function () {});
+    }
+  })();
+
+  /* ---------- "şu an neredeyiz?" modu ---------- */
+  (function nowMode() {
+    var DAYS = ["2026-07-26", "2026-07-27", "2026-07-28"];
+    function localDate() {
+      var n = new Date();
+      return n.getFullYear() + "-" + pad(n.getMonth() + 1) + "-" + pad(n.getDate());
+    }
+    function update() {
+      var today = localDate();
+      var dayIdx = DAYS.indexOf(today);
+      var banner = $("#nowBanner");
+      $all(".tl li.now").forEach(function (li) { li.classList.remove("now"); });
+      if (dayIdx === -1) { banner.hidden = true; return; }
+      var dayCards = $all(".day-card");
+      var card = dayCards[dayIdx];
+      if (!card) { banner.hidden = true; return; }
+      var plan = card.querySelector(".plan.active");
+      if (!plan) { banner.hidden = true; return; }
+      var items = $all(".tl > li", plan);
+      var now = new Date();
+      var mins = now.getHours() * 60 + now.getMinutes();
+      var active = -1;
+      items.forEach(function (li, i) {
+        var t = li.querySelector(".t").textContent.trim().split(":");
+        var m = parseInt(t[0], 10) * 60 + parseInt(t[1], 10);
+        if (mins >= m) active = i;
+      });
+      if (active === -1) {
+        banner.hidden = false;
+        banner.innerHTML = "🌙 Bugün " + (dayIdx + 1) + ". gün! İlk adım: <strong>" +
+          items[0].querySelector(".what").textContent + "</strong> (" + items[0].querySelector(".t").textContent + ")";
+        return;
+      }
+      items[active].classList.add("now");
+      var cur = items[active].querySelector(".what").textContent;
+      var nextEl = items[active + 1];
+      banner.hidden = false;
+      banner.innerHTML = "📍 Şu an: <strong>" + cur + "</strong>" +
+        (nextEl ? "<span class='nb-next'>Sırada (" + nextEl.querySelector(".t").textContent + "): " +
+          nextEl.querySelector(".what").textContent + "</span>" : "");
+    }
+    update();
+    setInterval(update, 60 * 1000);
+    $all(".seg button").forEach(function (b) { b.addEventListener("click", function () { setTimeout(update, 50); }); });
+  })();
+
+  /* ---------- PWA: çevrimdışı destek ---------- */
+  if ("serviceWorker" in navigator && location.protocol === "https:") {
+    navigator.serviceWorker.register("sw.js").catch(function () {});
+  }
+
   /* ---------- gizli sürpriz: damlaya 5 kez dokun ---------- */
   var taps = 0, tapTimer;
   $("#logoDrop").addEventListener("click", function () {

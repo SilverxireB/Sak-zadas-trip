@@ -607,6 +607,86 @@ main { max-width: 680px; margin: 0 auto; padding: 0 16px; }
 .tabbar button.active .ico { transform: translateY(-2px) scale(1.12); }
 .tabbar button .ico { transition: transform 0.2s; }
 
+/* ---------- şu an bandı ---------- */
+.now-banner {
+  background: var(--citrus);
+  color: var(--volia);
+  border-radius: 14px;
+  padding: 12px 16px;
+  margin: 14px 0 4px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: var(--shadow);
+}
+.now-banner .nb-next { display: block; font-weight: 600; font-size: 0.82rem; opacity: 0.85; margin-top: 2px; }
+.tl li.now { background: #fdf3e0; border-radius: 12px; }
+.tl li.now::after { background: var(--citrus); box-shadow: 0 0 0 2px var(--citrus); animation: pulse 1.6s infinite; }
+.tl li.now .what::after {
+  content: "ŞU AN";
+  font-size: 0.62rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  background: var(--citrus-deep);
+  color: #fff;
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-left: 8px;
+  vertical-align: 2px;
+}
+@keyframes pulse {
+  0%,100% { box-shadow: 0 0 0 2px var(--citrus); }
+  50% { box-shadow: 0 0 0 6px rgba(231,154,46,0.35); }
+}
+
+/* ---------- hava durumu ---------- */
+.wx-strip { display: flex; gap: 8px; margin-top: 4px; }
+.wx-day {
+  flex: 1;
+  text-align: center;
+  background: var(--sky);
+  border-radius: 12px;
+  padding: 10px 4px;
+}
+.wx-day .d { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em; color: var(--sea); text-transform: uppercase; }
+.wx-day .i { font-size: 1.6rem; line-height: 1.4; }
+.wx-day .tt { font-weight: 800; color: var(--ink); font-size: 0.95rem; }
+.wx-day .tn { font-size: 0.78rem; color: #4a5a63; }
+.wx-day .w { font-size: 0.72rem; color: var(--sea); margin-top: 2px; }
+
+/* ---------- ada haritası ---------- */
+.map-card { padding: 8px; }
+#islandMap { width: 100%; height: auto; display: block; max-height: 72vh; }
+.map-label-big {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 800;
+  letter-spacing: 0.35em;
+  fill: #b9cbb4;
+}
+.map-dot { cursor: pointer; }
+.map-dot circle {
+  fill: var(--mastic);
+  stroke: var(--card);
+  stroke-width: 3;
+  transition: r 0.15s;
+}
+.map-dot.sea circle { fill: var(--sea); }
+.map-dot:hover circle, .map-dot:focus circle { r: 12; }
+.map-dot text {
+  font-family: var(--font-body);
+  font-size: 13px;
+  font-weight: 700;
+  fill: var(--ink-deep);
+  paint-order: stroke;
+  stroke: var(--card);
+  stroke-width: 3px;
+}
+.card.flash { animation: cardflash 1.6s ease; }
+@keyframes cardflash {
+  0%, 60% { box-shadow: 0 0 0 4px var(--citrus), var(--shadow); }
+  100% { box-shadow: var(--shadow); }
+}
+
 /* ---------- konfeti & toast ---------- */
 .confetti {
   position: fixed;

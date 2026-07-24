@@ -12,6 +12,14 @@
 
 Gizli sürpriz: üstteki sakız damlasına 5 kez dokunun. 🤫
 
+## Özellikler
+
+- **PWA / çevrimdışı**: Telefonda "Ana ekrana ekle" deyin — adada internet olmasa bile site açılır (uydu görselleri dahil önbelleğe alınır).
+- **"Şu an neredeyiz?"**: Gezi günlerinde (26–28 Tem) Plan sekmesi saate bakıp aktif adımı turuncu vurgular, sıradakini gösterir.
+- **Canlı hava durumu**: Sakız için 26–28 Temmuz tahmini (Open-Meteo, anahtarsız); son cevap önbellekte tutulur.
+- **Dokunmatik ada haritası**: Keşif sekmesindeki haritada noktaya dokun, ilgili karta ışınlan.
+- **Gerçek görüntüler**: Kart afişleri her lokasyonun gerçek uydu görüntüsü (`images/`, © Google).
+
 ## Bilgileri güncelleme
 
 Tüm rezervasyon bilgileri **`data.js`** dosyasında. Saat/telefon/link değişirse sadece o dosyayı düzenleyin — siteye otomatik yansır.
