@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sakız Adası '26 — İki Aile, Üç Gün, Bir Ada</title>
+<meta name="description" content="26–28 Temmuz 2026 Sakız Adası (Chios) aile gezisi rehberi: plan, plajlar, köyler, lezzetler ve çocuk oyunları.">
+<meta name="theme-color" content="#0e3a52">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M50 8 C50 8 20 46 20 66 a30 30 0 0 0 60 0 C80 46 50 8 50 8Z' fill='%23567f5b'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,700;12..96,800&family=Figtree:ital,wght@0,400;0,600;0,700;1,400&display=swap&subset=latin-ext" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="topbar">
+  <button class="drop-btn" id="logoDrop" aria-label="Sakız damlası">
+    <svg width="26" height="26" viewBox="0 0 100 100" aria-hidden="true">
+      <path d="M50 8 C50 8 20 46 20 66 a30 30 0 0 0 60 0 C80 46 50 8 50 8Z" fill="#567f5b"/>
+      <ellipse cx="40" cy="62" rx="7" ry="10" fill="#e6eedd" opacity="0.8"/>
+    </svg>
+  </button>
+  <h1>Sakız Adası '26</h1>
+  <span class="dates">26–28 Temmuz</span>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero" id="hero">
+  <div class="sun" aria-hidden="true"></div>
+  <p class="eyebrow">İki aile · Üç çocuk · Bir ada</p>
+  <h2>Sakız'a<br><span class="thin">gidiyoruz!</span></h2>
+  <p class="sub">Baharözü kafilesinin 3 günlük Ege kaçamağı — her şey hazır, keyfinize bakın.</p>
+  <div class="countdown" id="countdown" aria-live="polite"></div>
+
+  <div class="sea-stage" aria-hidden="true">
+    <span class="port cesme">ÇEŞME</span>
+    <span class="port sakiz">SAKIZ</span>
+    <svg class="ferry" viewBox="0 0 120 70">
+      <path d="M8 44 h104 l-12 18 H18 Z" fill="#e8e4d8"/>
+      <rect x="30" y="28" width="60" height="16" rx="3" fill="#0e3a52"/>
+      <rect x="46" y="14" width="28" height="14" rx="3" fill="#e79a2e"/>
+      <circle cx="40" cy="36" r="3.4" fill="#8ecadd"/>
+      <circle cx="56" cy="36" r="3.4" fill="#8ecadd"/>
+      <circle cx="72" cy="36" r="3.4" fill="#8ecadd"/>
+      <circle cx="86" cy="36" r="3.4" fill="#8ecadd"/>
+      <path d="M60 14 V6 l12 4 -12 4" fill="#c9302c"/>
+    </svg>
+    <div class="wave w1"></div>
+    <div class="wave w2"></div>
+    <div class="wave w3"></div>
+  </div>
+</section>
+<div class="xysta" aria-hidden="true"></div>
+
+<main>
+
+<!-- ================= PANEL: PLAN ================= -->
+<section class="panel active" id="panel-plan">
+
+  <div class="section-head">
+    <span class="kicker">Yolculuk künyesi</span>
+    <h3>Her şey ayarlandı</h3>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card">
+    <h4>⛴️ Feribot — Çeşme → Sakız</h4>
+    <span class="big-time" id="ferryDepart">09:00</span>
+    <p class="meta" id="ferryMeta"></p>
+    <ul>
+      <li><strong>Evden çıkış: <span id="leaveHome">05:30</span></strong> (en geç <span id="leaveHomeLatest">06:00</span> — feribotu kaçırmak yok! 😄)</li>
+      <li>Limanda olma: <strong id="portArrive">07:30</strong> — pasaport ve gümrük işlemleri için</li>
+      <li>Dönüş: <strong>28 Temmuz <span id="returnDepart">18:00</span></strong> · limanda <strong id="returnPortArrive">16:45</strong></li>
+      <li id="visaLine">🟢 Kapı vizesi ONAYLANDI</li>
+    </ul>
+    <a class="btn citrus" id="voucherBtn" href="#" target="_blank" rel="noopener">🎫 Feribot voucher'ı</a>
+  </div>
+
+  <div class="card">
+    <h4>🚗 Kiralık araç</h4>
+    <p id="carModel" class="meta"></p>
+    <ul id="carList"></ul>
+    <a class="btn ghost" id="carPhone" href="#">📞 Ofisi ara</a>
+  </div>
+
+  <div class="card">
+    <h4>🏠 Konaklama — <span id="stayName">Chios Shallow Sea</span></h4>
+    <p class="meta" id="stayArea"></p>
+    <ul id="stayList"></ul>
+    <a class="btn" id="stayMaps" href="#" target="_blank" rel="noopener">📍 Haritada aç</a>
+    <a class="btn ghost" id="stayPhone" href="#">📞 Ev sahibi</a>
+  </div>
+
+  <div class="section-head">
+    <span class="kicker">Gün gün plan</span>
+    <h3>3 gün, bol seçenek</h3>
+    <p class="lede">Her günün iki planı var — sabah kahvaltıda oylayın, kazanan uygulanır. İkisi de güzeldir, yanlış seçim yok. 😌</p>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <!-- GÜN 1 -->
+  <div class="card day-card">
+    <div class="day-head">
+      <span class="day-no">1. Gün — 26 Temmuz Pazar</span>
+      <h4>Merhaba Sakız!</h4>
+      <p class="day-sub">Erken kalkış, kısa yolculuk, ilk deniz.</p>
+    </div>
+    <div class="seg" role="tablist" aria-label="1. gün plan seçenekleri">
+      <button class="active" data-day="1" data-plan="a">Plan A · Önce şehir</button>
+      <button data-day="1" data-plan="b">Plan B · Önce deniz</button>
+    </div>
+    <div class="plan active" id="plan-1a">
+      <ul class="tl">
+        <li class="hot"><span class="t">05:30</span><span class="what">Yola çıkış 🌙</span><span class="note">Uykucular arabada uyur. Pasaportlar en üstte!</span></li>
+        <li><span class="t">07:30</span><span class="what">Çeşme Limanı — check-in</span><span class="note">Pasaport + gümrük. Kapı vizesi onaylı, evraklar çantada.</span></li>
+        <li class="hot"><span class="t">09:00</span><span class="what">Feribot kalkıyor ⛴️</span><span class="note">Güvertede martı sayma yarışması başlasın (bkz. Bingo).</span></li>
+        <li><span class="t">09:30</span><span class="what">Sakız'a varış + araç teslimi</span><span class="note">Musa & Gizem aracı alırken (<a href="https://maps.google.com/?q=Neorion+3+Chios" target="_blank" rel="noopener">Neorion 3</a>, limana 5 dk) diğerleri liman kahvesinde.</span></li>
+        <li><span class="t">10:30</span><span class="what">Chios Town keşfi</span><span class="note">Vounaki Meydanı → <a href="https://maps.google.com/?q=Aplotaria+Street+Chios" target="_blank" rel="noopener">Aplotaria Çarşısı</a> → Ceneviz Kalesi surları. Gölgeli, puset dostu.</span></li>
+        <li><span class="t">12:30</span><span class="what">Öğle: liman tavernası 🐙</span><span class="note">Kordonda balık-meze. Çocuklara patates her yerde var, garanti.</span></li>
+        <li><span class="t">14:30</span><span class="what">Karfas'a geçiş (10 dk)</span><span class="note">Market molası: su, meyve, kahvaltılık.</span></li>
+        <li class="hot"><span class="t">15:00</span><span class="what">Check-in: Chios Shallow Sea 🏠</span><span class="note">Karşılamaya gelecekler. Bavulu at, mayoyu giy!</span></li>
+        <li><span class="t">15:45</span><span class="what">Karfas Plajı 🏖️</span><span class="note">Kapının dibinde: kumlu, sığ, 2 yaş için birebir.</span></li>
+        <li><span class="t">19:30</span><span class="what">Akşam: Karfas sahil tavernası</span><span class="note">Gün batımına karşı ilk "Yamas!" 🥂</span></li>
+      </ul>
+    </div>
+    <div class="plan" id="plan-1b">
+      <ul class="tl">
+        <li class="hot"><span class="t">05:30</span><span class="what">Yola çıkış 🌙</span><span class="note">Aynı senaryo: en geç 06:00, tercihen 05:30.</span></li>
+        <li><span class="t">09:00</span><span class="what">Feribot + varış + araç teslimi</span><span class="note">Musa & Gizem araçta, ekip kahvede.</span></li>
+        <li><span class="t">10:15</span><span class="what">Doğruca Karfas 🏖️</span><span class="note">Geç kahvaltı + ilk deniz. Şezlonglu kısım çocuklarla rahat.</span></li>
+        <li class="hot"><span class="t">15:00</span><span class="what">Check-in + öğle uykusu 😴</span><span class="note">2 yaş şekerlemesi = herkese mola.</span></li>
+        <li><span class="t">17:00</span><span class="what">Daskalopetra — Homeros'un Kayası 🗿</span><span class="note"><a href="https://maps.google.com/?q=Daskalopetra+Chios" target="_blank" rel="noopener">20 dk kuzeye</a>. Homeros'un öğrencilerine burada ders verdiği söylenir. Çocuklara masal gibi anlatın!</span></li>
+        <li><span class="t">19:00</span><span class="what">Chios Town kordonu</span><span class="note">Akşam yemeği + liman ışıkları.</span></li>
+        <li class="hot"><span class="t">21:00</span><span class="what">Kronos dondurması 🍦</span><span class="note">1930'dan beri! Sakızlı (masticha) mutlaka denenecek.</span></li>
+      </ul>
+    </div>
+    <div class="flip" data-flip>
+      <div class="flip-inner">
+        <div class="flip-face flip-front">🎁 Günün sürprizi — dokun!</div>
+        <div class="flip-face flip-back">Akşam dondurmacıda "en komik sakızlı dondurma yüz ifadesi" yarışması: kazanan yarınki rotayı seçer! 📸</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GÜN 2 -->
+  <div class="card day-card">
+    <div class="day-head">
+      <span class="day-no">2. Gün — 27 Temmuz Pazartesi</span>
+      <h4>Mastik Diyarı & Siyah Plaj</h4>
+      <p class="day-sub">Güneye yolculuk: desenli evler, volkan taşları, masal sokaklar.</p>
+    </div>
+    <div class="seg" role="tablist" aria-label="2. gün plan seçenekleri">
+      <button class="active" data-day="2" data-plan="a">Plan A · Plaj ağırlıklı</button>
+      <button data-day="2" data-plan="b">Plan B · Keşif ağırlıklı</button>
+    </div>
+    <div class="plan active" id="plan-2a">
+      <ul class="tl">
+        <li><span class="t">09:00</span><span class="what">Güneye hareket 🚗</span><span class="note">~40 dk. Yol üstünde sakız ağaçlarına dikkat — "ağlayan" ağaçlar bunlar!</span></li>
+        <li class="hot"><span class="t">09:45</span><span class="what">Pyrgi — desenli köy 🖤🤍</span><span class="note"><a href="https://maps.google.com/?q=Pyrgi+Chios" target="_blank" rel="noopener">Geometrik "ksista" evler</a>. Meydanda kahve, çocuklara görev: en desenli evi bul!</span></li>
+        <li><span class="t">11:15</span><span class="what">Mavra Volia — siyah plaj 🌑</span><span class="note"><a href="https://maps.google.com/?q=Mavra+Volia+Beach" target="_blank" rel="noopener">Volkanik siyah çakıllar</a>, masmavi su. Deniz ayakkabısı şart; 2 yaş kıyı kenarında.</span></li>
+        <li><span class="t">13:00</span><span class="what">Öğle: Emporios limanı 🐟</span><span class="note">Küçük koyun tavernaları — ahtapot burada başka güzel.</span></li>
+        <li class="hot"><span class="t">14:30</span><span class="what">Komi Plajı 🏖️</span><span class="note"><a href="https://maps.google.com/?q=Komi+Beach+Chios" target="_blank" rel="noopener">Uzun kumsal</a>, sığ deniz, şezlong + duş. Çocuk cenneti — kumdan kale vakti.</span></li>
+        <li><span class="t">17:30</span><span class="what">Dönüş yolu + dondurma molası</span><span class="note">Komi sahilinde dondurmacılar var; yol üstünde Armolia çömlek atölyeleri.</span></li>
+        <li><span class="t">19:30</span><span class="what">Akşam: Karfas</span><span class="note">Yorgun ama mutlu. Erken yatış — yarın veda günü.</span></li>
+      </ul>
+    </div>
+    <div class="plan" id="plan-2b">
+      <ul class="tl">
+        <li><span class="t">09:00</span><span class="what">Güneye hareket 🚗</span><span class="note">Önce en uçtaki köyden başlıyoruz.</span></li>
+        <li class="hot"><span class="t">09:50</span><span class="what">Mesta — labirent köy 🌀</span><span class="note"><a href="https://maps.google.com/?q=Mesta+Chios" target="_blank" rel="noopener">Korsanlara karşı labirent</a> gibi kurulmuş taş sokaklar. Görev çocuklarda: meydana giden yolu onlar bulacak!</span></li>
+        <li><span class="t">11:30</span><span class="what">Sakız Müzesi 🌳</span><span class="note"><a href="https://maps.google.com/?q=Chios+Mastic+Museum" target="_blank" rel="noopener">Mastik Müzesi</a> (10:00–18:00, bugün açık). Damla sakızının hikâyesi — bahçesinde sakız ağaçları.</span></li>
+        <li><span class="t">13:00</span><span class="what">Pyrgi'de öğle + köy turu</span><span class="note">Meydan tavernasında yemek, desenli evler arasında yürüyüş.</span></li>
+        <li class="hot"><span class="t">15:00</span><span class="what">Mavra Volia — siyah plaj 🌑</span><span class="note">İkindi serinliğinde deniz + dünyanın en fotojenik plajında aile fotoğrafı.</span></li>
+        <li><span class="t">18:00</span><span class="what">Dönüş: Karfas</span><span class="note">Yolda Armolia'da çömlek vitrinlerine göz atın.</span></li>
+        <li><span class="t">20:00</span><span class="what">Akşam yemeği</span><span class="note">Karfas ya da Chios Town — enerjiye göre.</span></li>
+      </ul>
+    </div>
+    <div class="flip" data-flip>
+      <div class="flip-inner">
+        <div class="flip-face flip-front">🎁 Günün sürprizi — dokun!</div>
+        <div class="flip-face flip-back">Kumsalda hazine avı: büyükler plajda küçük sürprizler saklar, harita çizilir, çocuklar bulur! 🗺️ (Sürprizleri evden çantaya koymayı unutmayın 🤫)</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GÜN 3 -->
+  <div class="card day-card">
+    <div class="day-head">
+      <span class="day-no">3. Gün — 28 Temmuz Salı</span>
+      <h4>Veda Turu & Kebap Finali</h4>
+      <p class="day-sub">Check-out 11:00 · Feribot 18:00 · Akşam Manisa kebabı!</p>
+    </div>
+    <div class="seg" role="tablist" aria-label="3. gün plan seçenekleri">
+      <button class="active" data-day="3" data-plan="a">Plan A · Batı rotası</button>
+      <button data-day="3" data-plan="b">Plan B · Rahat veda</button>
+    </div>
+    <div class="plan active" id="plan-3a">
+      <ul class="tl">
+        <li><span class="t">09:00</span><span class="what">Kahvaltı + bavul + check-out</span><span class="note">En geç 11:00'de çıkış; bavullar araçlara.</span></li>
+        <li class="hot"><span class="t">10:00</span><span class="what">Anavatos — hayalet köy 🏰</span><span class="note"><a href="https://maps.google.com/?q=Anavatos+Chios" target="_blank" rel="noopener">Kayalık tepede terk edilmiş taş köy</a> — adanın en dramatik manzarası. 2 yaş için taşıyıcı iyi olur; yol üstünde Avgonyma'da fotoğraf molası.</span></li>
+        <li><span class="t">11:45</span><span class="what">Nea Moni Manastırı ✨</span><span class="note"><a href="https://maps.google.com/?q=Nea+Moni+Chios" target="_blank" rel="noopener">1000 yıllık UNESCO mirası</a> — Bizans mozaikleri. Kısa ve etkileyici bir mola.</span></li>
+        <li><span class="t">13:00</span><span class="what">Lithi Plajı + balık öğlesi 🐟</span><span class="note"><a href="https://maps.google.com/?q=Lithi+Beach+Chios" target="_blank" rel="noopener">Batı kıyısının kumlu koyu</a>; plaj tavernasında taze balık, ardından son deniz.</span></li>
+        <li><span class="t">15:45</span><span class="what">Chios Town'a dönüş (35 dk)</span><span class="note">Hızlı hediyelik turu: damla sakızı, sakız reçeli, loukoumi.</span></li>
+        <li class="hot"><span class="t">16:30</span><span class="what">Araç iadesi 🚗</span><span class="note">Neorion 3 ofisine teslim, limana yürüme mesafesi.</span></li>
+        <li class="hot"><span class="t">18:00</span><span class="what">Feribot: Sakız → Çeşme ⛴️</span><span class="note">Güvertede veda + Bingo ödül töreni!</span></li>
+        <li><span class="t">20:30</span><span class="what">Manisa: Spor Kebapçısı 🍢</span><span class="note"><a href="https://maps.google.com/?q=Spor+Kebap+Manisa" target="_blank" rel="noopener">Ali Koç'un da yediği</a> meşhur Manisa kebabıyla kapanış. Tatlı: mesir macunlu dondurma?</span></li>
+      </ul>
+    </div>
+    <div class="plan" id="plan-3b">
+      <ul class="tl">
+        <li><span class="t">09:00</span><span class="what">Ağırdan kahvaltı + bavul</span><span class="note">Check-out 11:00 — acele yok.</span></li>
+        <li class="hot"><span class="t">11:00</span><span class="what">Karfas'ta son deniz 🏖️</span><span class="note">Plaj zaten evin önünde; duşlar plajda var.</span></li>
+        <li><span class="t">13:30</span><span class="what">Öğle: Karfas tavernası</span><span class="note">Mastelo peyniri ızgarası şansı — son fırsat!</span></li>
+        <li><span class="t">15:00</span><span class="what">Chios Town hediyelik turu 🛍️</span><span class="note">Aplotaria'da damla sakızı, sakızlı kurabiye, sabun; çocuklara küçük hatıralar.</span></li>
+        <li class="hot"><span class="t">16:00</span><span class="what">Kronos finali 🍦</span><span class="note">Son bir sakızlı dondurma — gelenek tamamlanır.</span></li>
+        <li class="hot"><span class="t">16:30</span><span class="what">Araç iadesi 🚗</span><span class="note">Neorion 3 — sonra limana yürüyüş.</span></li>
+        <li class="hot"><span class="t">18:00</span><span class="what">Feribot: Sakız → Çeşme ⛴️</span><span class="note">Bingo ödül töreni güvertede!</span></li>
+        <li><span class="t">20:30</span><span class="what">Manisa: Spor Kebapçısı 🍢</span><span class="note">Manisa kebabı finali — eve mis gibi kokularla dönüş.</span></li>
+      </ul>
+    </div>
+    <div class="flip" data-flip>
+      <div class="flip-inner">
+        <div class="flip-face flip-front">🎁 Günün sürprizi — dokun!</div>
+        <div class="flip-face flip-back">Feribotta ödül töreni: Sakız Bingo şampiyonuna madalya + dönüşte kebapta ilk sipariş hakkı! 🏅</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PANEL: PLAJLAR ================= -->
+<section class="panel" id="panel-beach">
+  <div class="section-head">
+    <span class="kicker">Plaj rehberi</span>
+    <h3>Hangi plaj, hangi çocuğa?</h3>
+    <p class="lede">Damla sayısı = çocuklarla rahatlık puanı (🌢 5 üzerinden). Hepsi haritaya bağlı, dokun ve git.</p>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card">
+    <div class="beach-head"><h4>🏖️ Karfas</h4><span class="drops" aria-label="5 üzerinden 5">🌢🌢🌢🌢🌢</span></div>
+    <p class="meta">Evimizin önündeki plaj. Yumuşak kum, diz boyu ilerleyen sığ deniz — 2 yaş için adanın en iyisi.</p>
+    <div class="beach-facts">
+      <span class="tag">Kum</span><span class="tag">Sığ ve ılık</span><span class="tag">Şezlong + duş</span><span class="tag">Kafeler yanında</span><span class="tag sea">Eve 3 dk</span>
+    </div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Karfas+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <div class="beach-head"><h4>🏖️ Komi</h4><span class="drops" aria-label="5 üzerinden 5">🌢🌢🌢🌢🌢</span></div>
+    <p class="meta">Güneyin uzun kumsalı. Sığ, dalgasız, arkası taverna dolu — 2. günün plaj yıldızı.</p>
+    <div class="beach-facts">
+      <span class="tag">İnce kum</span><span class="tag">Çok sığ</span><span class="tag">Taverna + dondurma</span><span class="tag sea">Karfas'a 35 dk</span>
+    </div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Komi+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <div class="beach-head"><h4>🌑 Mavra Volia</h4><span class="drops" aria-label="5 üzerinden 3">🌢🌢🌢<span class="off">🌢🌢</span></span></div>
+    <p class="meta">Adanın imzası: volkanik siyah çakıllar + kobalt mavisi su. Manzara 10/10; deniz çabuk derinleşir.</p>
+    <div class="beach-facts">
+      <span class="tag dark">Siyah çakıl</span><span class="tag warn">Deniz ayakkabısı şart</span><span class="tag warn">2 yaş kıyıda</span><span class="tag">Gölge yok — şapka!</span>
+    </div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Mavra+Volia+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <div class="beach-head"><h4>🐟 Lithi</h4><span class="drops" aria-label="5 üzerinden 4">🌢🌢🌢🌢<span class="off">🌢</span></span></div>
+    <p class="meta">Batı kıyısının sakin, kumlu koyu. Plajın dibinde balık tavernaları — öğle yemeği + deniz kombosu.</p>
+    <div class="beach-facts">
+      <span class="tag">Kum</span><span class="tag">Sığ</span><span class="tag">Balık tavernası</span><span class="tag sea">3. gün Plan A'da</span>
+    </div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Lithi+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <div class="beach-head"><h4>🤍 Agia Fotini</h4><span class="drops" aria-label="5 üzerinden 4">🌢🌢🌢🌢<span class="off">🌢</span></span></div>
+    <p class="meta">Karfas'ın 10 dk güneyinde, beyaz çakıllı, berrak sulu sakin koy. Karfas kalabalık gelirse B planı.</p>
+    <div class="beach-facts">
+      <span class="tag">İnce çakıl</span><span class="tag">Berrak su</span><span class="tag">Sakin</span><span class="tag sea">Karfas'a 10 dk</span>
+    </div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Agia+Fotini+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <div class="beach-head"><h4>🕵️ Vroulidia</h4><span class="drops" aria-label="5 üzerinden 2">🌢🌢<span class="off">🌢🌢🌢</span></span></div>
+    <p class="meta">Adanın güney ucunda saklı mini koy — beyaz çakıl, turkuaz su. Merdivenle iniliyor; büyük çocuklarla kısa macera, puset gelemez.</p>
+    <div class="beach-facts">
+      <span class="tag warn">Merdivenli iniş</span><span class="tag">Manzara 5/5</span><span class="tag">Küçük ve sessiz</span>
+    </div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Vroulidia+Beach+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <h4>🧠 Plaj taktikleri</h4>
+    <ul>
+      <li>Deniz ayakkabıları çakıl plajların anahtarı — üçü de çantada olsun.</li>
+      <li>En sıcak saatler (13:00–16:00) için: Karfas'ın şezlonglu bölümü gölgelikli.</li>
+      <li>2 yaş uykusu plaj dönüş saatine denk gelirse araç = mobil uyku odası. 😴</li>
+      <li>Duş + üst değiştirme: Karfas ve Komi'de var, Mavra Volia'da yok.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= PANEL: KEŞİF ================= -->
+<section class="panel" id="panel-explore">
+  <div class="section-head">
+    <span class="kicker">Köyler & yerler</span>
+    <h3>Adanın masal tarafı</h3>
+    <p class="lede">Sakız'ın köyleri korsanlara karşı labirent gibi kurulmuş — çocuklara "kale köyler" diye anlatın, keşif oyuna dönsün.</p>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card">
+    <h4>🖤 Pyrgi — desenli köy</h4>
+    <p class="meta">Evleri gri-beyaz geometrik desenlerle kazınmış ("ksista" tekniği) — Yunanistan'da başka örneği yok. Meydanda domatesler balkonlardan sarkar, kahveler meydanı izler.</p>
+    <div class="beach-facts"><span class="tag">2. gün rotasında</span><span class="tag sea">Karfas'a 40 dk</span><span class="tag">Puset kısmen OK</span></div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Pyrgi+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <h4>🌀 Mesta — labirent köy</h4>
+    <p class="meta">Taş kemerli sokaklar birbirine öyle dolanır ki köyün kendisi bir bulmaca. Ortadaki meydanda Taksiarhis Kilisesi ve gölgeli tavernalar. Kaybolmak serbest — zaten plan bu.</p>
+    <div class="beach-facts"><span class="tag">2. gün Plan B</span><span class="tag warn">Taş zemin — taşıyıcı iyi olur</span></div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Mesta+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <h4>🏰 Anavatos — hayalet köy</h4>
+    <p class="meta">Kayalık bir tepeye yapışmış, terk edilmiş taş köy. Uzaktan kayadan ayırt edilmiyor. Adanın en etkileyici manzarası — sabah serinliğinde gidilir.</p>
+    <div class="beach-facts"><span class="tag">3. gün Plan A</span><span class="tag warn">Dik patika — 2 yaş taşıyıcıda</span></div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Anavatos+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <h4>✨ Nea Moni — 1000 yıllık manastır</h4>
+    <p class="meta">Bizans döneminden kalma UNESCO Dünya Mirası; altın mozaikleri Türkiye'deki Ayasofya ustalarının çağdaşları yapmış. Kısa ziyaret, büyük etki.</p>
+    <div class="beach-facts"><span class="tag">3. gün Plan A</span><span class="tag">Omuzlar kapalı — şal alın</span></div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Nea+Moni+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <h4>🌳 Sakız Müzesi (Mastic Museum)</h4>
+    <p class="meta">Damla sakızının 3000 yıllık hikâyesi modern bir müzede. Bahçesi sakız ağaçlarıyla dolu — "ağlayan ağacı" burada canlı görürsünüz. 10:00–18:00 (Salı kapalı; bizim pazartesi uygun).</p>
+    <div class="beach-facts"><span class="tag">2. gün Plan B</span><span class="tag">Bebek arabası OK</span></div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Chios+Mastic+Museum" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="card">
+    <h4>🗿 Daskalopetra — Homeros'un Kayası</h4>
+    <p class="meta">Rivayete göre Homeros öğrencilerine bu kayanın üstünde ders verirdi. Deniz kenarında kısa bir durak; İlyada'yı yazan adamın "sınıfında" fotoğraf çektirilir.</p>
+    <div class="beach-facts"><span class="tag">1. gün Plan B</span><span class="tag sea">Chios Town'a 15 dk</span></div>
+    <a class="btn ghost" href="https://maps.google.com/?q=Daskalopetra+Chios" target="_blank" rel="noopener">📍 Haritada</a>
+  </div>
+
+  <div class="section-head">
+    <span class="kicker">Lezzet haritası</span>
+    <h3>Ne yenir, ne alınır?</h3>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card">
+    <h4>🍦 Mutlaka tadın</h4>
+    <ul>
+      <li><strong>Sakızlı dondurma</strong> — Chios Town'da <a href="https://maps.google.com/?q=Kronos+Ice+Cream+Chios" target="_blank" rel="noopener">Kronos (1930'dan beri)</a> klasik durak.</li>
+      <li><strong>Mastelo peyniri</strong> — adaya özgü, ızgarada servis edilir; çocuklar da bayılır.</li>
+      <li><strong>Ypovrichio ("denizaltı")</strong> — soğuk suya batırılmış vanilya/sakız macunu çubuğu; çocuk klasiği.</li>
+      <li><strong>Taze balık & ahtapot</strong> — Emporios ve Lithi tavernalarında güneş kurusu ahtapot.</li>
+      <li><strong>Souvlaki</strong> — garantici çocuklar için her yerde güvenli liman.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>🛍️ Bavula girecekler</h4>
+    <ul>
+      <li><strong>Damla sakızı (mastiha)</strong> — dünyada sadece bu adada üretilir; ELMA marka sakızlar hediyelik klasiği.</li>
+      <li><strong>Sakızlı reçel & loukoumi</strong> — kahve yanına.</li>
+      <li><strong>Sakızlı sabun ve krem</strong> — bavul dostu hediyeler.</li>
+      <li><strong>Armolia çömlekleri</strong> — 2. gün yol üstünde atölyeler.</li>
+    </ul>
+    <p class="meta">Alışveriş için en iyi yer: Chios Town, Aplotaria Çarşısı (3. gün planda var).</p>
+  </div>
+
+  <div class="card">
+    <h4>💡 Biliyor muydunuz?</h4>
+    <ul>
+      <li>Sakız ağacı dünyanın her yerinde yetişir ama <strong>sadece bu adanın güneyinde "ağlar"</strong> — reçinesi damla damla toplanır.</li>
+      <li>Adanın Türkçe adı da buradan gelir: Sakız Adası. Yunanlar "Hios" der.</li>
+      <li>Çeşme ile Sakız arası yaklaşık <strong>8 deniz mili</strong> — feribot yolculuğu çay içimi kadar.</li>
+      <li>Mavra Volia'nın siyah taşları eski bir volkan patlamasının hediyesi.</li>
+      <li>Homeros'un bu adada doğduğuna inanılır — İlyada'nın yazarıyla hemşehri oluyorsunuz (2 günlüğüne).</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= PANEL: ÇOCUKLAR ================= -->
+<section class="panel" id="panel-kids">
+  <div class="section-head">
+    <span class="kicker">Çocuk üssü</span>
+    <h3>Sakız Bingo 🎯</h3>
+    <p class="lede">Görevi yapan kutuya basar, damga alır. Hepsini toplayan feribotta madalya töreniyle ŞAMPİYON ilan edilir!</p>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="bingo-grid" id="bingoGrid"></div>
+  <p class="bingo-status" id="bingoStatus"></p>
+  <div style="text-align:center">
+    <button class="btn ghost" id="bingoReset">Bingoyu sıfırla</button>
+  </div>
+
+  <div class="section-head">
+    <span class="kicker">Mini dil okulu</span>
+    <h3>5 dakikada Yunanca</h3>
+    <p class="lede">Tavernada bir "efharisto" demek, dondurmada bonus gülümseme getirir. Garanti.</p>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card">
+    <div class="phrase"><span class="gr">Yasu! <small>(Γεια σου)</small></span><span class="tr">Merhaba / Selam</span></div>
+    <div class="phrase"><span class="gr">Kalimera</span><span class="tr">Günaydın</span></div>
+    <div class="phrase"><span class="gr">Efharisto</span><span class="tr">Teşekkürler</span></div>
+    <div class="phrase"><span class="gr">Parakalo</span><span class="tr">Lütfen / Rica ederim</span></div>
+    <div class="phrase"><span class="gr">Ne</span><span class="tr">EVET! (şaşırtmaca — "ne" evet demek 😄)</span></div>
+    <div class="phrase"><span class="gr">Ohi</span><span class="tr">Hayır</span></div>
+    <div class="phrase"><span class="gr">Pagoto</span><span class="tr">Dondurma (en kritik kelime 🍦)</span></div>
+    <div class="phrase"><span class="gr">Nero</span><span class="tr">Su</span></div>
+    <div class="phrase"><span class="gr">Poso kani?</span><span class="tr">Kaç para?</span></div>
+    <div class="phrase"><span class="gr">Yamas!</span><span class="tr">Şerefe!</span></div>
+  </div>
+
+  <div class="card">
+    <h4>🚗 Araçta oyunlar</h4>
+    <ul>
+      <li><strong>Renk avı:</strong> ilk mavi kapıyı / ilk kediyi / ilk sakız ağacını gören puan alır.</li>
+      <li><strong>Yunanca tabela okuma:</strong> ΤΑΒΕΡΝΑ'yı ilk sökebilen kazanır (cevap: taverna!).</li>
+      <li><strong>Masal modu:</strong> Anavatos yolunda "taş köyün sırrı" masalını büyükler uydurur, çocuklar devamını getirir.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= PANEL: CEPTE ================= -->
+<section class="panel" id="panel-pocket">
+  <div class="section-head">
+    <span class="kicker">Cepte dursun</span>
+    <h3>Belgeler & numaralar</h3>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card">
+    <h4>📄 Rezervasyon künyeleri</h4>
+    <ul>
+      <li>⛴️ Feribot: <strong>Feribotlines</strong> · <span id="pkVisa"></span></li>
+      <li>🏠 Otel: <strong id="pkStay"></strong></li>
+      <li>🚗 Araç: <strong id="pkCar"></strong></li>
+    </ul>
+    <a class="btn citrus" id="pkVoucher" href="#" target="_blank" rel="noopener">🎫 Feribot voucher'ı</a>
+  </div>
+
+  <div class="card">
+    <h4>📞 Önemli numaralar</h4>
+    <ul>
+      <li>🏠 Ev sahibi: <a id="pkStayPhone" href="#">+30 227 103 0399</a></li>
+      <li>🚗 Araç ofisi (Avance): <a id="pkCarPhone" href="#">+30 227 102 1666</a></li>
+      <li>⛴️ Feribotlines: <a id="pkFerryPhone" href="#">+90 850 885 0097</a></li>
+      <li>🚨 Acil durum (AB geneli): <a href="tel:112">112</a></li>
+      <li>💊 Eczane = yeşil haç tabelası (ΦΑΡΜΑΚΕΙΟ)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>💶 Para & pratik</h4>
+    <ul>
+      <li>Para birimi <strong>Euro</strong>; kart yaygın ama köy tavernaları için <strong>nakit</strong> bulunsun.</li>
+      <li>Araç depozitosu (868 €) için <strong>Gizem adına, üzerinde numarası yazılı fiziksel kart</strong> — limiti kontrol edin.</li>
+      <li>Saat farkı yok — yazın Yunanistan ve Türkiye aynı saatte. 🎉</li>
+      <li>Telefon: yurt dışı paketi alın ya da ev + taverna wifi'ı; sınırda otomatik Yunan operatörüne geçer.</li>
+      <li>Trafik aynı (sağdan); Türk ehliyeti geçerli. Köy yolları dar — kornaya değil sabra güvenin.</li>
+      <li>Benzinci güneyde seyrek — 2. gün çıkmadan depoya bakın.</li>
+      <li>Musluk suyu yerine şişe su; marketler bol.</li>
+      <li>26'sı Pazar: bazı dükkânlar kapalı olabilir; market ihtiyacını cumartesiden değil, adada ilk gün öğleden önce alın.</li>
+      <li>Öğle 14:00–17:30 arası küçük dükkânlar "siesta"da olabilir.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h4>👶 2 yaş özel notları</h4>
+    <ul>
+      <li>Puset: Chios Town kordonu, Karfas, Sakız Müzesi rahat. Mesta/Anavatos taş zemin — <strong>taşıyıcı</strong> kurtarır.</li>
+      <li>Öğle uykusunu araç yolculuklarına denk getirin (2. gün güney yolu ~40 dk, cuk oturur).</li>
+      <li>Bez, mama, tanıdık atıştırmalıklar yeterli stokla — marka bulmak garantili değil.</li>
+      <li>Ateş düşürücü + termometre çantada; eczaneler öğlen kapanabiliyor.</li>
+    </ul>
+  </div>
+
+  <div class="section-head">
+    <span class="kicker">Son kontrol</span>
+    <h3>Bavul listesi</h3>
+    <p class="lede">İşaretledikleriniz telefonda kayıtlı kalır — havalimanı klasiği "acaba aldık mı?" krizine son.</p>
+    <div class="xysta-zigzag" aria-hidden="true"></div>
+  </div>
+
+  <div class="card" id="checklist"></div>
+  <div style="text-align:center">
+    <button class="btn ghost" id="checkReset">Listeyi sıfırla</button>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="xysta on-dark flip" aria-hidden="true" style="margin:-26px -16px 18px"></div>
+  <p class="fam">Baharözü kafilesi · Sakız Adası 2026</p>
+  <p>İki aile, üç çocuk, bir ada — hatıralar burada başlar. 🌊</p>
+</footer>
+
+<nav class="tabbar" aria-label="Bölümler">
+  <button class="active" data-panel="panel-plan"><span class="ico">🗓️</span>Plan</button>
+  <button data-panel="panel-beach"><span class="ico">🏖️</span>Plajlar</button>
+  <button data-panel="panel-explore"><span class="ico">🏘️</span>Keşif</button>
+  <button data-panel="panel-kids"><span class="ico">🎯</span>Çocuklar</button>
+  <button data-panel="panel-pocket"><span class="ico">🎒</span>Cepte</button>
+</nav>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
