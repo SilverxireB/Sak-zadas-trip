@@ -3,7 +3,7 @@
    "önce önbellek, yoksa ağ, inince kaydet" mantığıyla çalışır.
    Adada internet olmasa bile site açılır. */
 
-var CACHE = "sakiz26-v3";
+var CACHE = "sakiz26-v4";
 var SHELL = [
   "./",
   "index.html",
