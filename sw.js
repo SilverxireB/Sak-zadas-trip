@@ -3,7 +3,7 @@
    "önce önbellek, yoksa ağ, inince kaydet" mantığıyla çalışır.
    Adada internet olmasa bile site açılır. */
 
-var CACHE = "sakiz26-v4";
+var CACHE = "sakiz26-v5";
 var SHELL = [
   "./",
   "index.html",
@@ -34,6 +34,35 @@ self.addEventListener("activate", function (e) {
 self.addEventListener("fetch", function (e) {
   if (e.request.method !== "GET") return;
   var url = new URL(e.request.url);
+
+  // Sayfanın kendisi (HTML): HER ZAMAN önce ağ — güncel sürüm anında gelir;
+  // internet yoksa önbellekteki son kopyaya düşer.
+  if (e.request.mode === "navigate") {
+    e.respondWith(
+      fetch(e.request).then(function (res) {
+        var copy = res.clone();
+        caches.open(CACHE).then(function (c) { c.put("index.html", copy); });
+        return res;
+      }).catch(function () {
+        return caches.match("index.html").then(function (hit) {
+          return hit || caches.match("./");
+        });
+      })
+    );
+    return;
+  }
+
+  // CSS/JS de önce ağ (küçük dosyalar, güncellik önemli)
+  if (url.origin === location.origin && /\.(css|js)$|data\.js/.test(url.pathname)) {
+    e.respondWith(
+      fetch(e.request).then(function (res) {
+        var copy = res.clone();
+        caches.open(CACHE).then(function (c) { c.put(e.request, copy); });
+        return res;
+      }).catch(function () { return caches.match(e.request); })
+    );
+    return;
+  }
 
   // Hava durumu: önce ağ, düşerse önbellekteki son cevap
   if (url.hostname.indexOf("open-meteo.com") > -1) {
