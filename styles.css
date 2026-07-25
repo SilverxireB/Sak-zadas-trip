@@ -475,7 +475,7 @@ main { max-width: 680px; margin: 0 auto; padding: 0 16px; }
   line-height: 0;
   border-bottom: 1px solid var(--line);
 }
-.card-art svg { width: 100%; height: auto; display: block; }
+.card-art svg, .card-art img { width: 100%; height: auto; display: block; }
 
 /* ---------- plaj kartları ---------- */
 .beach-head { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
