@@ -3,7 +3,7 @@
    "önce önbellek, yoksa ağ, inince kaydet" mantığıyla çalışır.
    Adada internet olmasa bile site açılır. */
 
-var CACHE = "sakiz26-v2";
+var CACHE = "sakiz26-v3";
 var SHELL = [
   "./",
   "index.html",
@@ -12,19 +12,7 @@ var SHELL = [
   "data.js",
   "manifest.webmanifest",
   "icon-192.png",
-  "icon-512.png",
-  "images/ferry.jpg",
-  "images/karfas.jpg",
-  "images/komi.jpg",
-  "images/mavra-volia.jpg",
-  "images/lithi.jpg",
-  "images/agia-fotini.jpg",
-  "images/vroulidia.jpg",
-  "images/pyrgi.jpg",
-  "images/mesta.jpg",
-  "images/anavatos.jpg",
-  "images/nea-moni.jpg",
-  "images/daskalopetra.jpg"
+  "icon-512.png"
 ];
 
 self.addEventListener("install", function (e) {
