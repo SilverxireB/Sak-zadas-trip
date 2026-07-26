@@ -49,9 +49,11 @@
   $("#carList").innerHTML =
     "<li>Teslim alma: <strong>" + TRIP.car.pickup + "</strong> — " + TRIP.car.drivers + "</li>" +
     "<li>İade: <strong>" + TRIP.car.dropoff + "</strong></li>" +
+    "<li>📍 " + TRIP.car.address + " · 🕗 " + TRIP.car.hours + "</li>" +
     "<li>⚠️ " + TRIP.car.deposit + "</li>" +
     "<li class=\"meta\">" + TRIP.car.booking + "</li>";
   $("#carPhone").href = telHref(TRIP.car.phone);
+  $("#carMaps").href = TRIP.car.mapsUrl;
 
   $("#stayName").textContent = TRIP.stay.name;
   $("#stayArea").textContent = TRIP.stay.area + " — plaja yürüme mesafesi";
@@ -559,7 +561,7 @@
       .sort(function (a, b) { return a.km - b.km; })
       .slice(0, 8);
     $("#nearList").innerHTML = rows.map(function (x, i) {
-      return "<a class='near-row" + (i === 0 ? " closest" : "") + "' href='" + mapsUrl(x.p.q) +
+      return "<a class='near-row" + (i === 0 ? " closest" : "") + "' href='" + (x.p.u || mapsUrl(x.p.q)) +
         "' target='_blank' rel='noopener'><span class='nr-ico'>" + ICO[x.p.t] + "</span>" +
         "<span class='nr-main'><span class='nr-name'>" + x.p.n + "</span>" +
         "<span class='nr-desc'>" + x.p.d + "</span></span>" +
@@ -639,7 +641,7 @@
     out.innerHTML = "<b>" + i.head + " → " + i.place.n + "</b>" +
       (i.km !== null ? " <span class='rate'>" + fmtDist(i.km) + " · " + fmtTravel(i.km) + "</span>" : "") +
       "<span class='io-why'>" + i.why + "</span>" +
-      "<a href='" + mapsUrl(i.place.q) + "' target='_blank' rel='noopener'>📍 Yol tarifi</a>";
+      "<a href='" + (i.place.u || mapsUrl(i.place.q)) + "' target='_blank' rel='noopener'>📍 Yol tarifi</a>";
     out.hidden = false;
     $("#ideaBtn").textContent = "🔄 Başka bir şey öner";
   }

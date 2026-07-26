@@ -30,7 +30,10 @@ const TRIP = {
     drivers: "Musa & Gizem teslim alacak",
     deposit: "868 € depozito — Gizem adına kredi kartı şart (üzerinde numarası yazılı fiziksel kart)",
     booking: "D014472400 · Onay: 4LD0E0",
-    phone: "+30 227 102 1666"
+    phone: "+30 227 102 1666",
+    hours: "Ofis 08:00 – 21:00 açık",
+    address: "Neorion 3, Chios 82100 — Downtown, limana yürüme mesafesi",
+    mapsUrl: "https://goo.gl/maps/hE16Xu5g6xTigEcG8"
   },
 
   stay: {
@@ -63,6 +66,7 @@ const PLACES = [
   { n: "Lithi Plajı",         t: "beach", la: 38.3414, lo: 25.9927, q: "Lithi Beach Chios",         d: "Kum + balık tavernası" },
   { n: "Elinda",              t: "beach", la: 38.3255, lo: 25.9910, q: "Elinda Beach Chios",        d: "Dalgasız, gün batımı" },
   { n: "Agia Dynami",         t: "beach", la: 38.2230, lo: 25.9390, q: "Agia Dynami Beach Chios",   d: "Turkuaz mini koy" },
+  { n: "Araç ofisi (Avance)", t: "spot",  la: 38.3706, lo: 26.1398, u: "https://goo.gl/maps/hE16Xu5g6xTigEcG8", q: "Neorion 3, Chios 82100, Greece", d: "Araç iadesi · 08–21" },
   { n: "Chios Town",          t: "spot",  la: 38.3688, lo: 26.1358, q: "Chios Town",                d: "Kordon, çarşı, kale" },
   { n: "Pyrgi",               t: "spot",  la: 38.2273, lo: 25.9992, q: "Pyrgi Chios",               d: "Desenli evler" },
   { n: "Mesta",               t: "spot",  la: 38.2602, lo: 25.9221, q: "Mesta Chios",               d: "Labirent taş köy" },
