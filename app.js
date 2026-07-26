@@ -71,25 +71,77 @@
   $("#pkCarPhone").href = telHref(TRIP.car.phone);
   $("#pkFerryPhone").href = telHref(TRIP.ferry.phone);
 
-  /* ---------- geri sayım ---------- */
+  /* ---------- hero: geri sayım / canlı yolculuk paneli ---------- */
   var target = new Date(TRIP.departureISO).getTime();
   var tripEnd = target + 3 * 24 * 60 * 60 * 1000;
+  var TRIP_DAYS = ["2026-07-26", "2026-07-27", "2026-07-28"];
+  var DAY_TITLES = ["Merhaba Sakız!", "Mastik Diyarı", "Veda Turu"];
   function pad(n) { return n < 10 ? "0" + n : "" + n; }
+  function localDateStr(dt) {
+    return dt.getFullYear() + "-" + pad(dt.getMonth() + 1) + "-" + pad(dt.getDate());
+  }
+  function greeting(h) {
+    if (h >= 5 && h < 11) return "☀️ Günaydın!";
+    if (h >= 11 && h < 17) return "🏖️ İyi günler!";
+    if (h >= 17 && h < 22) return "🌇 İyi akşamlar!";
+    return "🌙 İyi geceler!";
+  }
 
-  function renderCountdown() {
+  var liveBuilt = false;
+  function renderHero() {
     var box = $("#countdown");
-    var now = Date.now();
-    if (now >= tripEnd) {
+    var now = new Date();
+    var t = now.getTime();
+
+    if (t >= tripEnd) {
       box.className = "countdown msg";
       box.innerHTML = "<div class='cell'><span class='num'>Hatıralar hâlâ taze 💙</span></div>";
       return;
     }
-    if (now >= target) {
-      box.className = "countdown msg";
-      box.innerHTML = "<div class='cell'><span class='num'>🎉 Macera başladı — iyi eğlenceler!</span></div>";
+
+    if (t >= target) {
+      // GEZİ MODU — canlı panel
+      var dayIdx = TRIP_DAYS.indexOf(localDateStr(now));
+      if (dayIdx === -1) dayIdx = Math.min(2, Math.max(0, Math.floor((t - target) / 86400000)));
+      if (!liveBuilt) {
+        box.className = "countdown live-wrap";
+        box.innerHTML =
+          "<div class='live'>" +
+          "<div class='live-head' id='liveHead'></div>" +
+          "<div class='live-clock' id='liveClock'></div>" +
+          "<button type='button' class='live-now' id='heroNow' hidden></button>" +
+          "<div class='trip-track'><span class='tt-stop' style='left:0'>26</span><span class='tt-stop' style='left:50%'>27</span><span class='tt-stop' style='left:100%'>28</span><span class='tt-ferry' id='ttFerry'>⛴️</span></div>" +
+          "<div class='live-wx' id='heroWx' hidden></div>" +
+          "<div class='live-chips'>" +
+          "<a href='" + TRIP.ferry.voucherUrl + "' target='_blank' rel='noopener'>🎫 Voucher</a>" +
+          "<a href='" + telHref(TRIP.stay.phone) + "'>📞 Ev sahibi</a>" +
+          "<button type='button' data-go='panel-kids'>🎯 Bingo</button>" +
+          "<button type='button' data-go='panel-explore'>🗺️ Harita</button>" +
+          "</div></div>";
+        liveBuilt = true;
+        var h2 = $(".hero h2");
+        if (h2) h2.innerHTML = "Sakız'­da<span class='thin'>yız!</span>";
+        var sub = $(".hero .sub");
+        if (sub) sub.textContent = "Plan cebinizde, deniz önünüzde — panel sizi takip ediyor.";
+        $all(".live-chips [data-go]").forEach(function (b) {
+          b.addEventListener("click", function () { showPanel(b.dataset.go); });
+        });
+        $("#heroNow").addEventListener("click", function () {
+          showPanel("panel-plan");
+          var li = $(".tl li.now");
+          if (li) setTimeout(function () { li.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); }, 80);
+        });
+      }
+      $("#liveHead").innerHTML = greeting(now.getHours()) + " <b>" + (dayIdx + 1) + ". gün — " + DAY_TITLES[dayIdx] + "</b>";
+      $("#liveClock").innerHTML = pad(now.getHours()) + ":" + pad(now.getMinutes()) + "<span>:" + pad(now.getSeconds()) + "</span>";
+      var pct = Math.max(0, Math.min(100, (t - target) / (tripEnd - target) * 100));
+      $("#ttFerry").style.left = pct + "%";
       return;
     }
-    var d = target - now;
+
+    // GEZİ ÖNCESİ — geri sayım
+    box.className = "countdown";
+    var d = target - t;
     var days = Math.floor(d / 86400000);
     var hrs = Math.floor((d % 86400000) / 3600000);
     var min = Math.floor((d % 3600000) / 60000);
@@ -100,8 +152,8 @@
       "<div class='cell'><span class='num'>" + pad(min) + "</span><span class='lbl'>dakika</span></div>" +
       "<div class='cell'><span class='num'>" + pad(sec) + "</span><span class='lbl'>saniye</span></div>";
   }
-  renderCountdown();
-  setInterval(renderCountdown, 1000);
+  renderHero();
+  setInterval(renderHero, 1000);
 
   /* ---------- sekmeler ---------- */
   function showPanel(id) {
@@ -305,13 +357,26 @@
       $("#wxStrip").innerHTML = html;
       $("#wxNote").textContent = "Deniz zaten harika olacak — rüzgâr 20 km/s üstüyse feribotta üst güverte serin olur.";
       $("#weatherCard").hidden = false;
+
+      // hero canlı paneline anlık hava + gün batımı
+      var hw = $("#heroWx");
+      if (hw && data.current) {
+        var todayIdx = Math.max(0, d.time.indexOf(localDateStr(new Date())));
+        var sunset = d.sunset && d.sunset[todayIdx] ? d.sunset[todayIdx].slice(11, 16) : null;
+        hw.innerHTML = "Şu an <b>" + Math.round(data.current.temperature_2m) + "°</b> " +
+          icon(data.current.weather_code) +
+          " · 💨 " + Math.round(data.current.wind_speed_10m) + " km/s" +
+          (sunset ? " · 🌇 gün batımı <b>" + sunset + "</b>" : "");
+        hw.hidden = false;
+      }
     }
     try {
       var cached = JSON.parse(localStorage.getItem(WKEY) || "null");
       if (cached && Date.now() - cached.at < 3 * 3600 * 1000) render(cached.data);
     } catch (e) {}
     var url = "https://api.open-meteo.com/v1/forecast?latitude=38.37&longitude=26.14" +
-      "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max" +
+      "&daily=weather_code,temperature_2m_max,temperature_2m_min,wind_speed_10m_max,sunset" +
+      "&current=temperature_2m,weather_code,wind_speed_10m" +
       "&timezone=Europe%2FAthens&start_date=2026-07-26&end_date=2026-07-28";
     if (Date.now() > new Date("2026-07-13").getTime() && Date.now() < tripEnd) {
       fetch(url).then(function (r) { return r.json(); }).then(function (data) {
@@ -327,6 +392,12 @@
     function localDate() {
       var n = new Date();
       return n.getFullYear() + "-" + pad(n.getMonth() + 1) + "-" + pad(n.getDate());
+    }
+    function setHeroNow(html) {
+      var hn = $("#heroNow");
+      if (!hn) return;
+      hn.innerHTML = html;
+      hn.hidden = false;
     }
     function update() {
       var today = localDate();
@@ -352,6 +423,8 @@
         banner.hidden = false;
         banner.innerHTML = "🌙 Bugün " + (dayIdx + 1) + ". gün! İlk adım: <strong>" +
           items[0].querySelector(".what").textContent + "</strong> (" + items[0].querySelector(".t").textContent + ")";
+        setHeroNow("İlk adım · <b>" + items[0].querySelector(".t").textContent + " " +
+          items[0].querySelector(".what").textContent + "</b>");
         return;
       }
       items[active].classList.add("now");
@@ -361,6 +434,9 @@
       banner.innerHTML = "📍 Şu an: <strong>" + cur + "</strong>" +
         (nextEl ? "<span class='nb-next'>Sırada (" + nextEl.querySelector(".t").textContent + "): " +
           nextEl.querySelector(".what").textContent + "</span>" : "");
+      setHeroNow("📍 <b>" + cur + "</b>" +
+        (nextEl ? "<span class='ln-next'>Sırada · " + nextEl.querySelector(".t").textContent + " " +
+          nextEl.querySelector(".what").textContent + " ›</span>" : ""));
     }
     update();
     setInterval(update, 60 * 1000);
