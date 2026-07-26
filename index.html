@@ -253,8 +253,9 @@
 <section class="panel" id="panel-beach">
   <div class="card near-card" id="nearCard">
     <h4>📍 Yanımda ne var?</h4>
-    <p class="meta">Konumunu bir kez al, her şey en yakından uzağa sıralanır. İnternet gerekmez.</p>
-    <button class="btn citrus" id="nearBtn" type="button">Yakınımdakileri göster</button>
+    <p class="meta" id="nearHint">Konum iznini bir kez ver — liste hareket ettikçe kendini günceller. İnternet gerekmez.</p>
+    <button class="btn citrus" id="nearBtn" type="button">📍 Konumumu kullan</button>
+    <div class="near-status" id="nearStatus" hidden></div>
     <div class="near-filters" id="nearFilters" hidden>
       <button class="active" data-f="all" type="button">Hepsi</button>
       <button data-f="beach" type="button">🏖️ Plaj</button>

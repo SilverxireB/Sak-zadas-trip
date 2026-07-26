@@ -510,15 +510,33 @@
       .sort(function (a, b) { return a.km - b.km; });
     return list[(skip || 0) % Math.max(1, list.length)] || null;
   }
-  function askPos(onOk, onFail) {
-    if (!navigator.geolocation) { onFail("Bu tarayıcı konum paylaşmıyor."); return; }
-    navigator.geolocation.getCurrentPosition(function (p) {
-      lastPos = { la: p.coords.latitude, lo: p.coords.longitude };
-      try { sessionStorage.setItem("sakiz26-pos", JSON.stringify(lastPos)); } catch (e) {}
-      onOk(lastPos);
-    }, function () {
-      onFail("Konum alınamadı — tarayıcıya konum izni vermeniz gerekiyor.");
-    }, { enableHighAccuracy: false, timeout: 12000, maximumAge: 120000 });
+  /* Konum sürekli izlenir: kullanıcı hareket ettikçe liste kendini günceller. */
+  var watchId = null, posAt = null;
+  function onFix(p) {
+    lastPos = { la: p.coords.latitude, lo: p.coords.longitude };
+    posAt = new Date();
+    try { sessionStorage.setItem("sakiz26-pos", JSON.stringify(lastPos)); } catch (e) {}
+    renderNear();
+    if (!$("#ideaOut").hidden) showIdea();
+  }
+  function startWatch() {
+    if (watchId !== null) return;
+    if (!navigator.geolocation) { toast("Bu tarayıcı konum paylaşmıyor.", 4000); return; }
+    watchId = navigator.geolocation.watchPosition(onFix, function (err) {
+      // Sadece izin reddi kalıcı: izlemeyi bırak, düğmeyi geri getir.
+      if (err && err.code === 1) {
+        navigator.geolocation.clearWatch(watchId);
+        watchId = null;
+        $("#nearStatus").hidden = true;
+        $("#nearHint").hidden = false;
+        $("#nearBtn").hidden = false;
+        $("#nearBtn").textContent = "📍 Konumumu kullan";
+        toast("Konum izni kapalı — tarayıcı ayarlarından açabilirsiniz.", 4500);
+        return;
+      }
+      // Geçici sinyal kaybı: izleme sürüyor, kullanıcıyı rahatsız etme.
+      if (!lastPos) $("#nearBtn").textContent = "Konum aranıyor…";
+    }, { enableHighAccuracy: false, timeout: 25000, maximumAge: 20000 });
   }
 
   /* ---------- "Yanımda ne var?" ---------- */
@@ -539,13 +557,16 @@
         "<span class='nr-dist'>" + fmtDist(x.km) + "<small>" + fmtTravel(x.km) + "</small></span></a>";
     }).join("");
     $("#nearFilters").hidden = false;
-    $("#nearBtn").textContent = "🔄 Konumu yenile";
+    $("#nearBtn").hidden = true;
+    $("#nearHint").hidden = true;
+    var st = $("#nearStatus");
+    st.innerHTML = "<span class='live-dot'></span>Konum canlı izleniyor" +
+      (posAt ? " · " + pad(posAt.getHours()) + ":" + pad(posAt.getMinutes()) + " güncellendi" : "");
+    st.hidden = false;
   }
   $("#nearBtn").addEventListener("click", function () {
-    var b = $("#nearBtn"), old = b.textContent;
-    b.textContent = "Konum alınıyor…";
-    askPos(function () { b.textContent = old; renderNear(); },
-      function (msg) { b.textContent = old; toast(msg, 4000); });
+    $("#nearBtn").textContent = "Konum alınıyor…";
+    startWatch();
   });
   $all("#nearFilters button").forEach(function (b) {
     b.addEventListener("click", function () {
@@ -555,6 +576,16 @@
     });
   });
   if (lastPos) renderNear();
+
+  // İzin daha önce verilmişse hiç sormadan takibe başla
+  if (navigator.permissions && navigator.permissions.query) {
+    navigator.permissions.query({ name: "geolocation" }).then(function (st) {
+      if (st.state === "granted") startWatch();
+      st.onchange = function () { if (st.state === "granted") startWatch(); };
+    }).catch(function () { if (lastPos) startWatch(); });
+  } else if (lastPos) {
+    startWatch();
+  }
 
   /* ---------- "Şimdi ne yapsak?" ---------- */
   var ideaTurn = 0;
@@ -604,14 +635,8 @@
     $("#ideaBtn").textContent = "🔄 Başka bir şey öner";
   }
   $("#ideaBtn").addEventListener("click", function () {
-    if ($("#ideaOut").hidden && !lastPos) {
-      var b = $("#ideaBtn"), old = b.textContent;
-      b.textContent = "Konum alınıyor…";
-      askPos(function () { b.textContent = old; showIdea(); },
-        function () { b.textContent = old; showIdea(); });
-      return;
-    }
-    ideaTurn++;
+    if (!$("#ideaOut").hidden) ideaTurn++;
+    if (!lastPos) startWatch();
     showIdea();
   });
 
