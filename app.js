@@ -193,10 +193,19 @@
     var top = mainEl.getBoundingClientRect().top + window.scrollY - 56;
     window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? "auto" : "smooth" });
   }
+  function todaysDayCard() {
+    var idx = TRIP_DAYS.indexOf(localDateStr(new Date()));
+    return idx === -1 ? null : $all(".day-card")[idx] || null;
+  }
   function showPanel(id, opts) {
     $all(".panel").forEach(function (p) { p.classList.toggle("active", p.id === id); });
     $all(".tabbar button").forEach(function (b) { b.classList.toggle("active", b.dataset.panel === id); });
-    if (!(opts && opts.noScroll)) scrollToContent();
+    if (!(opts && opts.noScroll)) {
+      // Plan sekmesi gezi günlerinde doğrudan bugünün planına açılır
+      var day = id === "panel-plan" ? todaysDayCard() : null;
+      if (day) day.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      else scrollToContent();
+    }
     if (history.replaceState) history.replaceState(null, "", "#" + id.replace("panel-", ""));
   }
   $all(".tabbar button").forEach(function (b) {

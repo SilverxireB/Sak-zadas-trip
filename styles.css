@@ -416,7 +416,7 @@ main { max-width: 680px; margin: 0 auto; padding: 0 16px; }
 .tag.sea  { background: #ddeef4; color: var(--sea); }
 
 /* ---------- gün planları ---------- */
-.day-card { padding: 0; overflow: hidden; }
+.day-card { padding: 0; overflow: hidden; scroll-margin-top: 56px; }
 .day-head {
   padding: 14px 16px 12px;
   background: var(--ink);
