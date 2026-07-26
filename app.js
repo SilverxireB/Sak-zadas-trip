@@ -129,18 +129,18 @@
         if (sub) sub.textContent = "Plan cebinizde, deniz önünüzde — panel sizi takip ediyor.";
         $all(".live-chips [data-go]").forEach(function (b) {
           b.addEventListener("click", function () {
-            showPanel(b.dataset.go);
             var t = b.dataset.scroll && $("#" + b.dataset.scroll);
-            if (t) setTimeout(function () {
-              t.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+            showPanel(b.dataset.go, { noScroll: !!t });
+            if (t) {
+              t.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
               t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash");
-            }, 80);
+            }
           });
         });
         $("#heroNow").addEventListener("click", function () {
-          showPanel("panel-plan");
           var li = $(".tl li.now");
-          if (li) setTimeout(function () { li.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" }); }, 80);
+          showPanel("panel-plan", { noScroll: !!li });
+          if (li) li.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
         });
       }
       $("#liveHead").innerHTML = greeting(now.getHours()) + " <b>" + (dayIdx + 1) + ". gün — " + DAY_TITLES[dayIdx] + "</b>";
@@ -187,18 +187,23 @@
   setInterval(renderHero, 1000);
 
   /* ---------- sekmeler ---------- */
-  function showPanel(id) {
+  var mainEl = document.querySelector("main");
+  function scrollToContent() {
+    // panelin ilk kartını üst çubuğun hemen altına getir
+    var top = mainEl.getBoundingClientRect().top + window.scrollY - 56;
+    window.scrollTo({ top: Math.max(0, top), behavior: reduceMotion ? "auto" : "smooth" });
+  }
+  function showPanel(id, opts) {
     $all(".panel").forEach(function (p) { p.classList.toggle("active", p.id === id); });
     $all(".tabbar button").forEach(function (b) { b.classList.toggle("active", b.dataset.panel === id); });
-    var hero = $("#hero");
-    if (window.scrollY > hero.offsetHeight) window.scrollTo({ top: 0, behavior: reduceMotion ? "auto" : "smooth" });
+    if (!(opts && opts.noScroll)) scrollToContent();
     if (history.replaceState) history.replaceState(null, "", "#" + id.replace("panel-", ""));
   }
   $all(".tabbar button").forEach(function (b) {
     b.addEventListener("click", function () { showPanel(b.dataset.panel); });
   });
   var hash = location.hash.replace("#", "");
-  if (hash && $("#panel-" + hash)) showPanel("panel-" + hash);
+  if (hash && $("#panel-" + hash)) showPanel("panel-" + hash, { noScroll: true });
   window.addEventListener("hashchange", function () {
     var h = location.hash.replace("#", "");
     if (h && $("#panel-" + h)) showPanel("panel-" + h);
@@ -344,16 +349,13 @@
     dot.setAttribute("tabindex", "0");
     dot.setAttribute("role", "button");
     function go() {
-      var target = dot.dataset.target, panel = dot.dataset.panel;
-      showPanel(panel);
-      var card = $("#" + target);
+      var card = $("#" + dot.dataset.target);
+      showPanel(dot.dataset.panel, { noScroll: !!card });
       if (!card) return;
-      setTimeout(function () {
-        card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
-        card.classList.remove("flash");
-        void card.offsetWidth;
-        card.classList.add("flash");
-      }, 60);
+      card.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" });
+      card.classList.remove("flash");
+      void card.offsetWidth;
+      card.classList.add("flash");
     }
     dot.addEventListener("click", go);
     dot.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });

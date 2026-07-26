@@ -26,6 +26,9 @@
 
 * { box-sizing: border-box; }
 
+/* hidden niteliği, display kuralı olan öğelerde de geçerli olsun */
+[hidden] { display: none !important; }
+
 html { scroll-behavior: smooth; }
 
 body {
@@ -319,7 +322,8 @@ a { color: var(--sea); }
 /* ---------- genel bölüm düzeni ---------- */
 main { max-width: 680px; margin: 0 auto; padding: 0 16px; }
 
-.panel { display: none; padding-top: 20px; }
+.panel { display: none; padding-top: 20px; scroll-margin-top: 56px; }
+.card { scroll-margin-top: 62px; }
 .panel.active { display: block; animation: fadein 0.35s ease; }
 @keyframes fadein {
   from { opacity: 0; transform: translateY(10px); }
