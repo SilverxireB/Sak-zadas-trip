@@ -715,6 +715,19 @@ main { max-width: 680px; margin: 0 auto; padding: 0 16px; }
   50% { box-shadow: 0 0 0 6px rgba(231,154,46,0.35); }
 }
 
+/* ---------- kart başlığı = harita linki ---------- */
+.card h4 a.tlink {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--sea-light);
+}
+.card h4 a.tlink .pin {
+  font-size: 0.8em;
+  vertical-align: 1px;
+  margin-left: 1px;
+}
+.card h4 a.tlink:active { color: var(--sea); }
+
 /* ---------- gizli konum linkleri ---------- */
 a.geo {
   color: inherit;
@@ -764,6 +777,21 @@ ul.eat .where {
   color: var(--sea);
   margin: 2px 0 2px;
 }
+ul.eat li.must > a { font-size: 1.1rem; }
+.rate.top { background: var(--citrus); color: #fff; }
+.eat-tier {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--citrus-deep);
+  margin: 16px 0 -2px;
+  padding-top: 10px;
+  border-top: 2px solid var(--line);
+}
+.eat-tier:first-child { margin-top: 6px; padding-top: 0; border-top: none; }
 
 /* ---------- "ne yapsak" + "yanımda ne var" ---------- */
 .idea-out {

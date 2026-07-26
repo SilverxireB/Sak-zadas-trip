@@ -588,7 +588,7 @@
 
     var hit = nearestOf(want, ideaTurn);
     if (hit) return { head: head, why: why, place: hit.p, km: hit.km };
-    var fallback = { beach: { n: "Karfas Plajı", q: "Karfas Beach Chios" }, spot: { n: "Pyrgi", q: "Pyrgi Chios" }, food: { n: "Bachari", q: "Bachari Agia Ermioni Chios" } };
+    var fallback = { beach: { n: "Karfas Plajı", q: "Karfas Beach Chios" }, spot: { n: "Pyrgi", q: "Pyrgi Chios" }, food: { n: "Karatzas", q: "Karatzas Karfas Chios" } };
     return { head: head, why: why, place: fallback[want], km: null };
   }
   function showIdea() {
