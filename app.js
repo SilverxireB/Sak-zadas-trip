@@ -87,6 +87,7 @@
     return "🌙 İyi geceler!";
   }
 
+  var wxNow = null, wxSunset = null;
   var liveBuilt = false;
   function renderHero() {
     var box = $("#countdown");
@@ -111,20 +112,30 @@
           "<div class='live-clock' id='liveClock'></div>" +
           "<button type='button' class='live-now' id='heroNow' hidden></button>" +
           "<div class='trip-track'><span class='tt-stop' style='left:0'>26</span><span class='tt-stop' style='left:50%'>27</span><span class='tt-stop' style='left:100%'>28</span><span class='tt-ferry' id='ttFerry'>⛴️</span></div>" +
+          "<div class='return-bar' id='returnBar' hidden></div>" +
           "<div class='live-wx' id='heroWx' hidden></div>" +
           "<div class='live-chips'>" +
-          "<a href='" + TRIP.ferry.voucherUrl + "' target='_blank' rel='noopener'>🎫 Voucher</a>" +
-          "<a href='" + telHref(TRIP.stay.phone) + "'>📞 Ev sahibi</a>" +
+          "<button type='button' data-go='panel-beach' data-scroll='nearCard'>📍 Yakınım</button>" +
+          "<button type='button' data-go='panel-plan' data-scroll='ideaCard'>🤔 Ne yapsak?</button>" +
           "<button type='button' data-go='panel-kids'>🎯 Bingo</button>" +
           "<button type='button' data-go='panel-explore'>🗺️ Harita</button>" +
+          "<a href='" + TRIP.ferry.voucherUrl + "' target='_blank' rel='noopener'>🎫 Voucher</a>" +
+          "<a href='" + telHref(TRIP.stay.phone) + "'>📞 Ev sahibi</a>" +
           "</div></div>";
         liveBuilt = true;
         var h2 = $(".hero h2");
-        if (h2) h2.innerHTML = "Sakız'­da<span class='thin'>yız!</span>";
+        if (h2) h2.innerHTML = "Sakız'da<span class='thin'>yız!</span>";
         var sub = $(".hero .sub");
         if (sub) sub.textContent = "Plan cebinizde, deniz önünüzde — panel sizi takip ediyor.";
         $all(".live-chips [data-go]").forEach(function (b) {
-          b.addEventListener("click", function () { showPanel(b.dataset.go); });
+          b.addEventListener("click", function () {
+            showPanel(b.dataset.go);
+            var t = b.dataset.scroll && $("#" + b.dataset.scroll);
+            if (t) setTimeout(function () {
+              t.scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "center" });
+              t.classList.remove("flash"); void t.offsetWidth; t.classList.add("flash");
+            }, 80);
+          });
         });
         $("#heroNow").addEventListener("click", function () {
           showPanel("panel-plan");
@@ -136,6 +147,26 @@
       $("#liveClock").innerHTML = pad(now.getHours()) + ":" + pad(now.getMinutes()) + "<span>:" + pad(now.getSeconds()) + "</span>";
       var pct = Math.max(0, Math.min(100, (t - target) / (tripEnd - target) * 100));
       $("#ttFerry").style.left = pct + "%";
+
+      // 3. gün: araç iadesi + feribot geri sayımı
+      var rb = $("#returnBar");
+      if (dayIdx === 2) {
+        rb.innerHTML = ["🚗 Araç iadesine:16:30", "⛴️ Feribota:18:00"].map(function (spec) {
+          var parts = spec.split(":");
+          var label = parts[0];
+          var due = new Date(now.getTime());
+          due.setHours(parseInt(parts[1], 10), parseInt(parts[2], 10), 0, 0);
+          var diff = due.getTime() - t;
+          if (diff <= 0) return "<div class='done'><span class='rb-l'>" + label + "</span><span class='rb-v'>geçti ✓</span></div>";
+          var mins = Math.floor(diff / 60000);
+          var val = mins >= 60 ? Math.floor(mins / 60) + "s " + pad(mins % 60) + "dk" : mins + " dk";
+          return "<div" + (mins <= 60 ? " class='urgent'" : "") + "><span class='rb-l'>" + label +
+            "</span><span class='rb-v'>" + val + "</span></div>";
+        }).join("");
+        rb.hidden = false;
+      } else {
+        rb.hidden = true;
+      }
       return;
     }
 
@@ -359,14 +390,15 @@
       $("#weatherCard").hidden = false;
 
       // hero canlı paneline anlık hava + gün batımı
+      var todayIdx = Math.max(0, d.time.indexOf(localDateStr(new Date())));
+      wxSunset = d.sunset && d.sunset[todayIdx] ? d.sunset[todayIdx].slice(11, 16) : null;
+      if (data.current) wxNow = data.current;
       var hw = $("#heroWx");
-      if (hw && data.current) {
-        var todayIdx = Math.max(0, d.time.indexOf(localDateStr(new Date())));
-        var sunset = d.sunset && d.sunset[todayIdx] ? d.sunset[todayIdx].slice(11, 16) : null;
-        hw.innerHTML = "Şu an <b>" + Math.round(data.current.temperature_2m) + "°</b> " +
-          icon(data.current.weather_code) +
-          " · 💨 " + Math.round(data.current.wind_speed_10m) + " km/s" +
-          (sunset ? " · 🌇 gün batımı <b>" + sunset + "</b>" : "");
+      if (hw && wxNow) {
+        hw.innerHTML = "Şu an <b>" + Math.round(wxNow.temperature_2m) + "°</b> " +
+          icon(wxNow.weather_code) +
+          " · 💨 " + Math.round(wxNow.wind_speed_10m) + " km/s" +
+          (wxSunset ? " · 🌇 gün batımı <b>" + wxSunset + "</b>" : "");
         hw.hidden = false;
       }
     }
@@ -447,6 +479,139 @@
   if ("serviceWorker" in navigator && location.protocol === "https:") {
     navigator.serviceWorker.register("sw.js").catch(function () {});
   }
+
+  /* ---------- konum yardımcıları ---------- */
+  var lastPos = null;
+  try { lastPos = JSON.parse(sessionStorage.getItem("sakiz26-pos") || "null"); } catch (e) {}
+
+  function haversine(a1, o1, a2, o2) {
+    var R = 6371, rad = Math.PI / 180;
+    var dLa = (a2 - a1) * rad, dLo = (o2 - o1) * rad;
+    var x = Math.sin(dLa / 2) * Math.sin(dLa / 2) +
+      Math.cos(a1 * rad) * Math.cos(a2 * rad) * Math.sin(dLo / 2) * Math.sin(dLo / 2);
+    return 2 * R * Math.asin(Math.min(1, Math.sqrt(x)));
+  }
+  function fmtDist(km) {
+    if (km < 0.06) return "buradasın";
+    return km < 1 ? Math.round(km * 1000) + " m" : km.toFixed(1).replace(".", ",") + " km";
+  }
+  function fmtTravel(km) {
+    if (km < 0.06) return "🎯";
+    if (km < 0.9) return "yürüme";
+    return "~" + Math.max(2, Math.round(km / 38 * 60)) + " dk";
+  }
+  function mapsUrl(q) { return "https://maps.google.com/?q=" + encodeURIComponent(q); }
+  function nearestOf(type, skip) {
+    if (!lastPos) return null;
+    var list = PLACES.filter(function (p) { return !type || p.t === type; })
+      .map(function (p) { return { p: p, km: haversine(lastPos.la, lastPos.lo, p.la, p.lo) }; })
+      .sort(function (a, b) { return a.km - b.km; });
+    return list[(skip || 0) % Math.max(1, list.length)] || null;
+  }
+  function askPos(onOk, onFail) {
+    if (!navigator.geolocation) { onFail("Bu tarayıcı konum paylaşmıyor."); return; }
+    navigator.geolocation.getCurrentPosition(function (p) {
+      lastPos = { la: p.coords.latitude, lo: p.coords.longitude };
+      try { sessionStorage.setItem("sakiz26-pos", JSON.stringify(lastPos)); } catch (e) {}
+      onOk(lastPos);
+    }, function () {
+      onFail("Konum alınamadı — tarayıcıya konum izni vermeniz gerekiyor.");
+    }, { enableHighAccuracy: false, timeout: 12000, maximumAge: 120000 });
+  }
+
+  /* ---------- "Yanımda ne var?" ---------- */
+  var nearFilter = "all";
+  var ICO = { beach: "🏖️", spot: "🏘️", food: "🍽️" };
+  function renderNear() {
+    if (!lastPos) return;
+    var rows = PLACES
+      .map(function (p) { return { p: p, km: haversine(lastPos.la, lastPos.lo, p.la, p.lo) }; })
+      .filter(function (x) { return nearFilter === "all" || x.p.t === nearFilter; })
+      .sort(function (a, b) { return a.km - b.km; })
+      .slice(0, 8);
+    $("#nearList").innerHTML = rows.map(function (x, i) {
+      return "<a class='near-row" + (i === 0 ? " closest" : "") + "' href='" + mapsUrl(x.p.q) +
+        "' target='_blank' rel='noopener'><span class='nr-ico'>" + ICO[x.p.t] + "</span>" +
+        "<span class='nr-main'><span class='nr-name'>" + x.p.n + "</span>" +
+        "<span class='nr-desc'>" + x.p.d + "</span></span>" +
+        "<span class='nr-dist'>" + fmtDist(x.km) + "<small>" + fmtTravel(x.km) + "</small></span></a>";
+    }).join("");
+    $("#nearFilters").hidden = false;
+    $("#nearBtn").textContent = "🔄 Konumu yenile";
+  }
+  $("#nearBtn").addEventListener("click", function () {
+    var b = $("#nearBtn"), old = b.textContent;
+    b.textContent = "Konum alınıyor…";
+    askPos(function () { b.textContent = old; renderNear(); },
+      function (msg) { b.textContent = old; toast(msg, 4000); });
+  });
+  $all("#nearFilters button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      nearFilter = b.dataset.f;
+      $all("#nearFilters button").forEach(function (x) { x.classList.toggle("active", x === b); });
+      renderNear();
+    });
+  });
+  if (lastPos) renderNear();
+
+  /* ---------- "Şimdi ne yapsak?" ---------- */
+  var ideaTurn = 0;
+  function buildIdea() {
+    var now = new Date();
+    var h = now.getHours() + now.getMinutes() / 60;
+    var temp = wxNow ? Math.round(wxNow.temperature_2m) : null;
+    var wind = wxNow ? Math.round(wxNow.wind_speed_10m) : null;
+    var isDay3 = localDateStr(now) === TRIP_DAYS[2];
+    var want = "beach", head, why;
+
+    if (isDay3 && h >= 14) {
+      want = "spot";
+      head = "Toparlanma vakti";
+      why = "Araç iadesi 16:30, feribot 18:00. Uzağa gitmeyin — Chios Town çevresinde kalın, hediyelikleri şimdi alın.";
+      return { head: head, why: why, place: { n: "Chios Town — Aplotaria Çarşısı", q: "Aplotaria Street Chios" }, km: null };
+    }
+    if (h < 8) { want = "beach"; head = "Erken deniz"; why = "8'den önce plajlar tenha, güneş yumuşak — kahvaltıyı sonraya bırakın."; }
+    else if (h < 11) { want = "spot"; head = "Köy vakti"; why = "Sabah serinliğinde taş sokaklar en keyifli; 11'den sonra ısınıyor."; }
+    else if (h < 13) { want = "beach"; head = "Deniz zamanı"; why = "Öğleden önceki son rahat saat — 13:00'ten sonra gölgeye kaçmak lazım."; }
+    else if (h < 15.5) { want = "food"; head = "Gölgede uzun öğle"; why = (temp ? "Günün en sıcak saati (" + temp + "°). " : "") + "Tavernada uzun bir öğle + 2 yaşa şekerleme molası."; }
+    else if (h < 17.5) { want = "beach"; head = "İkindi denizi"; why = "Güneş eğildi, su hâlâ sıcak — kumdan kale için en iyi saat."; }
+    else if (h < 20) { want = "beach"; head = "Altın saat"; why = "Gün batımına doğru fotoğraflar bambaşka oluyor" + (wxSunset ? " — bugün batış " + wxSunset + "." : "."); }
+    else if (h < 22.5) { want = "food"; head = "Akşam yemeği"; why = "Tavernalar şimdi doluyor; 20:30'u geçirmeden masaya oturun."; }
+    else { want = "food"; head = "Son bir dondurma"; why = "Çocuklar yorgunsa kordonda kısa bir tur + dondurma, sonra yatış."; }
+
+    if (wind && wind >= 28 && want === "beach") {
+      why = "💨 Rüzgâr " + wind + " km/s — korunaklı koy seçin, açık plajlarda şemsiye uçar. " + why;
+    }
+    if (temp && temp >= 34 && h >= 11 && h < 17.5) {
+      why = "🌡️ " + temp + "° — gölgesi olan yeri tercih edin, şapka şart. " + why;
+    }
+
+    var hit = nearestOf(want, ideaTurn);
+    if (hit) return { head: head, why: why, place: hit.p, km: hit.km };
+    var fallback = { beach: { n: "Karfas Plajı", q: "Karfas Beach Chios" }, spot: { n: "Pyrgi", q: "Pyrgi Chios" }, food: { n: "Bachari", q: "Bachari Agia Ermioni Chios" } };
+    return { head: head, why: why, place: fallback[want], km: null };
+  }
+  function showIdea() {
+    var i = buildIdea();
+    var out = $("#ideaOut");
+    out.innerHTML = "<b>" + i.head + " → " + i.place.n + "</b>" +
+      (i.km !== null ? " <span class='rate'>" + fmtDist(i.km) + " · " + fmtTravel(i.km) + "</span>" : "") +
+      "<span class='io-why'>" + i.why + "</span>" +
+      "<a href='" + mapsUrl(i.place.q) + "' target='_blank' rel='noopener'>📍 Yol tarifi</a>";
+    out.hidden = false;
+    $("#ideaBtn").textContent = "🔄 Başka bir şey öner";
+  }
+  $("#ideaBtn").addEventListener("click", function () {
+    if ($("#ideaOut").hidden && !lastPos) {
+      var b = $("#ideaBtn"), old = b.textContent;
+      b.textContent = "Konum alınıyor…";
+      askPos(function () { b.textContent = old; showIdea(); },
+        function () { b.textContent = old; showIdea(); });
+      return;
+    }
+    ideaTurn++;
+    showIdea();
+  });
 
   /* ---------- gizli sürpriz: damlaya 5 kez dokun ---------- */
   var taps = 0, tapTimer;

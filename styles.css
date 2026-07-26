@@ -233,9 +233,11 @@ a { color: var(--sea); }
 .live-wx b { color: var(--ink); }
 .live-chips {
   display: flex;
+  flex-wrap: wrap;
   gap: 6px;
   margin-top: 10px;
 }
+.live-chips a, .live-chips button { flex: 1 1 30%; }
 .live-chips a, .live-chips button {
   flex: 1;
   font-family: var(--font-body);
@@ -712,6 +714,140 @@ main { max-width: 680px; margin: 0 auto; padding: 0 16px; }
   0%,100% { box-shadow: 0 0 0 2px var(--citrus); }
   50% { box-shadow: 0 0 0 6px rgba(231,154,46,0.35); }
 }
+
+/* ---------- gizli konum linkleri ---------- */
+a.geo {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-style: dotted;
+  text-decoration-thickness: 1.5px;
+  text-decoration-color: rgba(22, 104, 138, 0.45);
+  text-underline-offset: 4px;
+}
+a.geo:active { color: var(--sea); }
+
+/* ---------- yemek listesi + puanlar ---------- */
+ul.eat { list-style: none; padding: 0; margin: 10px 0 0; }
+ul.eat li {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: 0.9rem;
+  color: #4a5a63;
+  line-height: 1.45;
+}
+ul.eat li:last-child { border-bottom: none; }
+ul.eat li > a {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 2px solid var(--sea-light);
+}
+.rate {
+  display: inline-block;
+  font-size: 0.76rem;
+  font-weight: 800;
+  background: #fbeed3;
+  color: var(--citrus-deep);
+  border-radius: 999px;
+  padding: 2px 8px;
+  margin-left: 6px;
+  vertical-align: 1px;
+  white-space: nowrap;
+}
+.rate.hi { background: var(--mastic-light); color: var(--mastic); }
+ul.eat .where {
+  display: block;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--sea);
+  margin: 2px 0 2px;
+}
+
+/* ---------- "ne yapsak" + "yanımda ne var" ---------- */
+.idea-out {
+  margin-top: 10px;
+  background: var(--mastic-light);
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  color: var(--ink-deep);
+}
+.idea-out b { color: var(--ink); }
+.idea-out .io-why { display: block; font-size: 0.8rem; color: #4a5a63; margin-top: 4px; }
+.idea-out a {
+  display: inline-block;
+  margin-top: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--paper);
+  background: var(--ink);
+  border-radius: 999px;
+  padding: 7px 14px;
+  text-decoration: none;
+}
+
+.near-filters { display: flex; gap: 6px; margin: 12px 0 4px; }
+.near-filters button {
+  flex: 1;
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--ink);
+  background: transparent;
+  border: 2px solid var(--line);
+  border-radius: 999px;
+  padding: 7px 2px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.near-filters button.active { background: var(--ink); border-color: var(--ink); color: var(--paper); }
+
+.near-list:empty { display: none; }
+.near-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 2px;
+  border-bottom: 1px dashed var(--line);
+  text-decoration: none;
+  color: inherit;
+}
+.near-row:last-child { border-bottom: none; }
+.near-row .nr-ico { font-size: 1.25rem; flex-shrink: 0; }
+.near-row .nr-main { flex: 1; min-width: 0; }
+.near-row .nr-name { display: block; font-weight: 700; color: var(--ink); font-size: 0.95rem; line-height: 1.25; }
+.near-row .nr-desc { display: block; font-size: 0.78rem; color: #4a5a63; line-height: 1.3; }
+.near-row .nr-dist {
+  flex-shrink: 0;
+  text-align: right;
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--sea);
+  font-size: 0.95rem;
+}
+.near-row .nr-dist small { display: block; font-weight: 600; font-size: 0.68rem; color: #7d8f99; }
+.near-row.closest { background: var(--mastic-light); border-radius: 12px; padding: 10px 8px; }
+
+/* ---------- dönüş sayacı (3. gün) ---------- */
+.return-bar {
+  display: flex;
+  gap: 8px;
+  margin-top: 10px;
+}
+.return-bar div {
+  flex: 1;
+  background: var(--sky);
+  border-radius: 12px;
+  padding: 8px 6px;
+}
+.return-bar .rb-l { display: block; font-size: 0.7rem; font-weight: 800; color: var(--sea); }
+.return-bar .rb-v { display: block; font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; color: var(--ink); line-height: 1.2; }
+.return-bar .urgent { background: #fbdcd8; }
+.return-bar .urgent .rb-l { color: #a3241e; }
+.return-bar .urgent .rb-v { color: #c9302c; }
+.return-bar .done { opacity: 0.5; }
 
 /* ---------- hava durumu ---------- */
 .wx-strip { display: flex; gap: 8px; margin-top: 4px; }

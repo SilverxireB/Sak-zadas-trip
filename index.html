@@ -65,6 +65,13 @@
 
   <div class="now-banner" id="nowBanner" hidden></div>
 
+  <div class="card idea-card" id="ideaCard">
+    <h4>🤔 Şimdi ne yapsak?</h4>
+    <p class="meta">Saate, havaya ve konumuna bakıp tek bir öneri verir. Seçenek yığını yok.</p>
+    <button class="btn citrus" id="ideaBtn" type="button">Bana bir şey öner</button>
+    <div class="idea-out" id="ideaOut" hidden></div>
+  </div>
+
   <div class="card weather" id="weatherCard" hidden>
     <h4>🌤️ Sakız'da hava</h4>
     <div class="wx-strip" id="wxStrip"></div>
@@ -127,26 +134,26 @@
     <div class="plan active" id="plan-1a">
       <ul class="tl">
         <li class="hot"><span class="t">05:30</span><span class="what">Yola çıkış 🌙</span><span class="note">Uykucular arabada uyur. Pasaportlar en üstte!</span></li>
-        <li><span class="t">07:30</span><span class="what">Çeşme Limanı — check-in</span><span class="note">Pasaport + gümrük. Kapı vizesi onaylı, evraklar çantada.</span></li>
+        <li><span class="t">07:30</span><span class="what"><a class="geo" href="https://maps.google.com/?q=%C3%87e%C5%9Fme%20Liman%C4%B1" target="_blank" rel="noopener">Çeşme Limanı</a> — check-in</span><span class="note">Pasaport + gümrük. Kapı vizesi onaylı, evraklar çantada.</span></li>
         <li class="hot"><span class="t">09:00</span><span class="what">Feribot kalkıyor ⛴️</span><span class="note">Güvertede martı sayma yarışması başlasın (bkz. Bingo).</span></li>
         <li><span class="t">09:30</span><span class="what">Sakız'a varış + araç teslimi</span><span class="note">Musa & Gizem aracı alırken (<a href="https://maps.google.com/?q=Neorion+3+Chios" target="_blank" rel="noopener">Neorion 3</a>, limana 5 dk) diğerleri liman kahvesinde.</span></li>
-        <li><span class="t">10:30</span><span class="what">Chios Town keşfi</span><span class="note">Vounaki Meydanı → <a href="https://maps.google.com/?q=Aplotaria+Street+Chios" target="_blank" rel="noopener">Aplotaria Çarşısı</a> → Ceneviz Kalesi surları. Gölgeli, puset dostu.</span></li>
+        <li><span class="t">10:30</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Chios%20Town" target="_blank" rel="noopener">Chios Town</a> keşfi</span><span class="note">Vounaki Meydanı → <a href="https://maps.google.com/?q=Aplotaria+Street+Chios" target="_blank" rel="noopener">Aplotaria Çarşısı</a> → Ceneviz Kalesi surları. Gölgeli, puset dostu.</span></li>
         <li><span class="t">12:30</span><span class="what">Öğle: liman tavernası 🐙</span><span class="note">Kordonda balık-meze. Çocuklara patates her yerde var, garanti.</span></li>
-        <li><span class="t">14:30</span><span class="what">Karfas'a geçiş (10 dk)</span><span class="note">Market molası: su, meyve, kahvaltılık.</span></li>
-        <li class="hot"><span class="t">15:00</span><span class="what">Check-in: Chios Shallow Sea 🏠</span><span class="note">Karşılamaya gelecekler. Bavulu at, mayoyu giy!</span></li>
-        <li><span class="t">15:45</span><span class="what">Karfas Plajı 🏖️</span><span class="note">Kapının dibinde: kumlu, sığ, 2 yaş için birebir.</span></li>
-        <li><span class="t">19:30</span><span class="what">Akşam: Karfas sahil tavernası</span><span class="note">Gün batımına karşı ilk "Yamas!" 🥂</span></li>
+        <li><span class="t">14:30</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Karfas%20Chios" target="_blank" rel="noopener">Karfas</a>'a geçiş (10 dk)</span><span class="note">Market molası: su, meyve, kahvaltılık.</span></li>
+        <li class="hot"><span class="t">15:00</span><span class="what">Check-in: <a class="geo" href="https://maps.google.com/?q=Chios%20Shallow%20Sea%20Karfas" target="_blank" rel="noopener">Chios Shallow Sea</a> 🏠</span><span class="note">Karşılamaya gelecekler. Bavulu at, mayoyu giy!</span></li>
+        <li><span class="t">15:45</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Karfas%20Beach%20Chios" target="_blank" rel="noopener">Karfas Plajı</a> 🏖️</span><span class="note">Kapının dibinde: kumlu, sığ, 2 yaş için birebir.</span></li>
+        <li><span class="t">19:30</span><span class="what">Akşam: <a class="geo" href="https://maps.google.com/?q=Karfas%20Chios" target="_blank" rel="noopener">Karfas</a> sahil tavernası</span><span class="note">Gün batımına karşı ilk "Yamas!" 🥂</span></li>
       </ul>
     </div>
     <div class="plan" id="plan-1b">
       <ul class="tl">
         <li class="hot"><span class="t">05:30</span><span class="what">Yola çıkış 🌙</span><span class="note">Aynı senaryo: en geç 06:00, tercihen 05:30.</span></li>
         <li><span class="t">09:00</span><span class="what">Feribot + varış + araç teslimi</span><span class="note">Musa & Gizem araçta, ekip kahvede.</span></li>
-        <li><span class="t">10:15</span><span class="what">Doğruca Karfas 🏖️</span><span class="note">Geç kahvaltı + ilk deniz. Şezlonglu kısım çocuklarla rahat.</span></li>
+        <li><span class="t">10:15</span><span class="what">Doğruca <a class="geo" href="https://maps.google.com/?q=Karfas%20Chios" target="_blank" rel="noopener">Karfas</a> 🏖️</span><span class="note">Geç kahvaltı + ilk deniz. Şezlonglu kısım çocuklarla rahat.</span></li>
         <li class="hot"><span class="t">15:00</span><span class="what">Check-in + öğle uykusu 😴</span><span class="note">2 yaş şekerlemesi = herkese mola.</span></li>
-        <li><span class="t">17:00</span><span class="what">Daskalopetra — Homeros'un Kayası 🗿</span><span class="note"><a href="https://maps.google.com/?q=Daskalopetra+Chios" target="_blank" rel="noopener">20 dk kuzeye</a>. Homeros'un öğrencilerine burada ders verdiği söylenir. Çocuklara masal gibi anlatın!</span></li>
-        <li><span class="t">19:00</span><span class="what">Chios Town kordonu</span><span class="note">Akşam yemeği + liman ışıkları.</span></li>
-        <li class="hot"><span class="t">21:00</span><span class="what">Kronos dondurması 🍦</span><span class="note">1930'dan beri! Sakızlı (masticha) mutlaka denenecek.</span></li>
+        <li><span class="t">17:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Daskalopetra%20Chios" target="_blank" rel="noopener">Daskalopetra</a> — Homeros'un Kayası 🗿</span><span class="note"><a href="https://maps.google.com/?q=Daskalopetra+Chios" target="_blank" rel="noopener">20 dk kuzeye</a>. Homeros'un öğrencilerine burada ders verdiği söylenir. Çocuklara masal gibi anlatın!</span></li>
+        <li><span class="t">19:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Chios%20Town" target="_blank" rel="noopener">Chios Town</a> kordonu</span><span class="note">Akşam yemeği + liman ışıkları.</span></li>
+        <li class="hot"><span class="t">21:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Kronos%20Ice%20Cream%20Chios" target="_blank" rel="noopener">Kronos</a> dondurması 🍦</span><span class="note">1930'dan beri! Sakızlı (masticha) mutlaka denenecek.</span></li>
       </ul>
     </div>
     <div class="flip" data-flip>
@@ -171,22 +178,22 @@
     <div class="plan active" id="plan-2a">
       <ul class="tl">
         <li><span class="t">09:00</span><span class="what">Güneye hareket 🚗</span><span class="note">~40 dk. Yol üstünde sakız ağaçlarına dikkat — "ağlayan" ağaçlar bunlar!</span></li>
-        <li class="hot"><span class="t">09:45</span><span class="what">Pyrgi — desenli köy 🖤🤍</span><span class="note"><a href="https://maps.google.com/?q=Pyrgi+Chios" target="_blank" rel="noopener">Geometrik "ksista" evler</a>. Meydanda kahve, çocuklara görev: en desenli evi bul!</span></li>
-        <li><span class="t">11:15</span><span class="what">Mavra Volia — siyah plaj 🌑</span><span class="note"><a href="https://maps.google.com/?q=Mavra+Volia+Beach" target="_blank" rel="noopener">Volkanik siyah çakıllar</a>, masmavi su. Deniz ayakkabısı şart; 2 yaş kıyı kenarında.</span></li>
-        <li><span class="t">13:00</span><span class="what">Öğle: Emporios limanı 🐟</span><span class="note">Küçük koyun tavernaları — ahtapot burada başka güzel.</span></li>
-        <li class="hot"><span class="t">14:30</span><span class="what">Komi Plajı 🏖️</span><span class="note"><a href="https://maps.google.com/?q=Komi+Beach+Chios" target="_blank" rel="noopener">Uzun kumsal</a>, sığ deniz, şezlong + duş. Çocuk cenneti — kumdan kale vakti.</span></li>
+        <li class="hot"><span class="t">09:45</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Pyrgi%20Chios" target="_blank" rel="noopener">Pyrgi</a> — desenli köy 🖤🤍</span><span class="note"><a href="https://maps.google.com/?q=Pyrgi+Chios" target="_blank" rel="noopener">Geometrik "ksista" evler</a>. Meydanda kahve, çocuklara görev: en desenli evi bul!</span></li>
+        <li><span class="t">11:15</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Mavra%20Volia%20Beach%20Chios" target="_blank" rel="noopener">Mavra Volia</a> — siyah plaj 🌑</span><span class="note"><a href="https://maps.google.com/?q=Mavra+Volia+Beach" target="_blank" rel="noopener">Volkanik siyah çakıllar</a>, masmavi su. Deniz ayakkabısı şart; 2 yaş kıyı kenarında.</span></li>
+        <li><span class="t">13:00</span><span class="what">Öğle: <a class="geo" href="https://maps.google.com/?q=Emporios%20Chios" target="_blank" rel="noopener">Emporios</a> limanı 🐟</span><span class="note">Küçük koyun tavernaları — ahtapot burada başka güzel.</span></li>
+        <li class="hot"><span class="t">14:30</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Komi%20Beach%20Chios" target="_blank" rel="noopener">Komi Plajı</a> 🏖️</span><span class="note"><a href="https://maps.google.com/?q=Komi+Beach+Chios" target="_blank" rel="noopener">Uzun kumsal</a>, sığ deniz, şezlong + duş. Çocuk cenneti — kumdan kale vakti.</span></li>
         <li><span class="t">17:30</span><span class="what">Dönüş yolu + dondurma molası</span><span class="note">Komi sahilinde dondurmacılar var; yol üstünde Armolia çömlek atölyeleri.</span></li>
-        <li><span class="t">19:30</span><span class="what">Akşam: Karfas</span><span class="note">Yorgun ama mutlu. Erken yatış — yarın veda günü.</span></li>
+        <li><span class="t">19:30</span><span class="what">Akşam: <a class="geo" href="https://maps.google.com/?q=Karfas%20Chios" target="_blank" rel="noopener">Karfas</a></span><span class="note">Yorgun ama mutlu. Erken yatış — yarın veda günü.</span></li>
       </ul>
     </div>
     <div class="plan" id="plan-2b">
       <ul class="tl">
         <li><span class="t">09:00</span><span class="what">Güneye hareket 🚗</span><span class="note">Önce en uçtaki köyden başlıyoruz.</span></li>
-        <li class="hot"><span class="t">09:50</span><span class="what">Mesta — labirent köy 🌀</span><span class="note"><a href="https://maps.google.com/?q=Mesta+Chios" target="_blank" rel="noopener">Korsanlara karşı labirent</a> gibi kurulmuş taş sokaklar. Görev çocuklarda: meydana giden yolu onlar bulacak!</span></li>
-        <li><span class="t">11:30</span><span class="what">Sakız Müzesi 🌳</span><span class="note"><a href="https://maps.google.com/?q=Chios+Mastic+Museum" target="_blank" rel="noopener">Mastik Müzesi</a> (10:00–18:00, bugün açık). Damla sakızının hikâyesi — bahçesinde sakız ağaçları.</span></li>
-        <li><span class="t">13:00</span><span class="what">Pyrgi'de öğle + köy turu</span><span class="note">Meydan tavernasında yemek, desenli evler arasında yürüyüş.</span></li>
-        <li class="hot"><span class="t">15:00</span><span class="what">Mavra Volia — siyah plaj 🌑</span><span class="note">İkindi serinliğinde deniz + dünyanın en fotojenik plajında aile fotoğrafı.</span></li>
-        <li><span class="t">18:00</span><span class="what">Dönüş: Karfas</span><span class="note">Yolda Armolia'da çömlek vitrinlerine göz atın.</span></li>
+        <li class="hot"><span class="t">09:50</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Mesta%20Chios" target="_blank" rel="noopener">Mesta</a> — labirent köy 🌀</span><span class="note"><a href="https://maps.google.com/?q=Mesta+Chios" target="_blank" rel="noopener">Korsanlara karşı labirent</a> gibi kurulmuş taş sokaklar. Görev çocuklarda: meydana giden yolu onlar bulacak!</span></li>
+        <li><span class="t">11:30</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Chios%20Mastic%20Museum" target="_blank" rel="noopener">Sakız Müzesi</a> 🌳</span><span class="note"><a href="https://maps.google.com/?q=Chios+Mastic+Museum" target="_blank" rel="noopener">Mastik Müzesi</a> (10:00–18:00, bugün açık). Damla sakızının hikâyesi — bahçesinde sakız ağaçları.</span></li>
+        <li><span class="t">13:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Pyrgi%20Chios" target="_blank" rel="noopener">Pyrgi</a>'de öğle + köy turu</span><span class="note">Meydan tavernasında yemek, desenli evler arasında yürüyüş.</span></li>
+        <li class="hot"><span class="t">15:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Mavra%20Volia%20Beach%20Chios" target="_blank" rel="noopener">Mavra Volia</a> — siyah plaj 🌑</span><span class="note">İkindi serinliğinde deniz + dünyanın en fotojenik plajında aile fotoğrafı.</span></li>
+        <li><span class="t">18:00</span><span class="what">Dönüş: <a class="geo" href="https://maps.google.com/?q=Karfas%20Chios" target="_blank" rel="noopener">Karfas</a></span><span class="note">Yolda Armolia'da çömlek vitrinlerine göz atın.</span></li>
         <li><span class="t">20:00</span><span class="what">Akşam yemeği</span><span class="note">Karfas ya da Chios Town — enerjiye göre.</span></li>
       </ul>
     </div>
@@ -212,25 +219,25 @@
     <div class="plan active" id="plan-3a">
       <ul class="tl">
         <li><span class="t">09:00</span><span class="what">Kahvaltı + bavul + check-out</span><span class="note">En geç 11:00'de çıkış; bavullar araçlara.</span></li>
-        <li class="hot"><span class="t">10:00</span><span class="what">Anavatos — hayalet köy 🏰</span><span class="note"><a href="https://maps.google.com/?q=Anavatos+Chios" target="_blank" rel="noopener">Kayalık tepede terk edilmiş taş köy</a> — adanın en dramatik manzarası. 2 yaş için taşıyıcı iyi olur; yol üstünde Avgonyma'da fotoğraf molası.</span></li>
-        <li><span class="t">11:45</span><span class="what">Nea Moni Manastırı ✨</span><span class="note"><a href="https://maps.google.com/?q=Nea+Moni+Chios" target="_blank" rel="noopener">1000 yıllık UNESCO mirası</a> — Bizans mozaikleri. Kısa ve etkileyici bir mola.</span></li>
-        <li><span class="t">13:00</span><span class="what">Lithi Plajı + balık öğlesi 🐟</span><span class="note"><a href="https://maps.google.com/?q=Lithi+Beach+Chios" target="_blank" rel="noopener">Batı kıyısının kumlu koyu</a>; plaj tavernasında taze balık, ardından son deniz.</span></li>
-        <li><span class="t">15:45</span><span class="what">Chios Town'a dönüş (35 dk)</span><span class="note">Hızlı hediyelik turu: damla sakızı, sakız reçeli, loukoumi.</span></li>
-        <li class="hot"><span class="t">16:30</span><span class="what">Araç iadesi 🚗</span><span class="note">Neorion 3 ofisine teslim, limana yürüme mesafesi.</span></li>
-        <li class="hot"><span class="t">18:00</span><span class="what">Feribot: Sakız → Çeşme ⛴️</span><span class="note">Güvertede veda + Bingo ödül töreni!</span></li>
-        <li><span class="t">20:30</span><span class="what">Manisa: Spor Kebapçısı 🍢</span><span class="note"><a href="https://maps.google.com/?q=Spor+Kebap+Manisa" target="_blank" rel="noopener">Ali Koç'un da yediği</a> meşhur Manisa kebabıyla kapanış.</span></li>
+        <li class="hot"><span class="t">10:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Anavatos%20Chios" target="_blank" rel="noopener">Anavatos</a> — hayalet köy 🏰</span><span class="note"><a href="https://maps.google.com/?q=Anavatos+Chios" target="_blank" rel="noopener">Kayalık tepede terk edilmiş taş köy</a> — adanın en dramatik manzarası. 2 yaş için taşıyıcı iyi olur; yol üstünde Avgonyma'da fotoğraf molası.</span></li>
+        <li><span class="t">11:45</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Nea%20Moni%20Chios" target="_blank" rel="noopener">Nea Moni Manastırı</a> ✨</span><span class="note"><a href="https://maps.google.com/?q=Nea+Moni+Chios" target="_blank" rel="noopener">1000 yıllık UNESCO mirası</a> — Bizans mozaikleri. Kısa ve etkileyici bir mola.</span></li>
+        <li><span class="t">13:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Lithi%20Beach%20Chios" target="_blank" rel="noopener">Lithi Plajı</a> + balık öğlesi 🐟</span><span class="note"><a href="https://maps.google.com/?q=Lithi+Beach+Chios" target="_blank" rel="noopener">Batı kıyısının kumlu koyu</a>; plaj tavernasında taze balık, ardından son deniz.</span></li>
+        <li><span class="t">15:45</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Chios%20Town" target="_blank" rel="noopener">Chios Town</a>'a dönüş (35 dk)</span><span class="note">Hızlı hediyelik turu: damla sakızı, sakız reçeli, loukoumi.</span></li>
+        <li class="hot"><span class="t">16:30</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Neorion%203%20Chios" target="_blank" rel="noopener">Araç iadesi</a> 🚗</span><span class="note">Neorion 3 ofisine teslim, limana yürüme mesafesi.</span></li>
+        <li class="hot"><span class="t">18:00</span><span class="what">Feribot: <a class="geo" href="https://maps.google.com/?q=Chios%20Port" target="_blank" rel="noopener">Sakız → Çeşme</a> ⛴️</span><span class="note">Güvertede veda + Bingo ödül töreni!</span></li>
+        <li><span class="t">20:30</span><span class="what">Manisa: <a class="geo" href="https://maps.google.com/?q=Spor%20Kebap%20Manisa" target="_blank" rel="noopener">Spor Kebapçısı</a> 🍢</span><span class="note"><a href="https://maps.google.com/?q=Spor+Kebap+Manisa" target="_blank" rel="noopener">Ali Koç'un da yediği</a> meşhur Manisa kebabıyla kapanış.</span></li>
       </ul>
     </div>
     <div class="plan" id="plan-3b">
       <ul class="tl">
         <li><span class="t">09:00</span><span class="what">Ağırdan kahvaltı + bavul</span><span class="note">Check-out 11:00 — acele yok.</span></li>
-        <li class="hot"><span class="t">11:00</span><span class="what">Karfas'ta son deniz 🏖️</span><span class="note">Plaj zaten evin önünde; duşlar plajda var.</span></li>
-        <li><span class="t">13:30</span><span class="what">Öğle: Karfas tavernası</span><span class="note">Mastelo peyniri ızgarası şansı — son fırsat!</span></li>
-        <li><span class="t">15:00</span><span class="what">Chios Town hediyelik turu 🛍️</span><span class="note">Aplotaria'da damla sakızı, sakızlı kurabiye, sabun; çocuklara küçük hatıralar.</span></li>
-        <li class="hot"><span class="t">16:00</span><span class="what">Kronos finali 🍦</span><span class="note">Son bir sakızlı dondurma — gelenek tamamlanır.</span></li>
-        <li class="hot"><span class="t">16:30</span><span class="what">Araç iadesi 🚗</span><span class="note">Neorion 3 — sonra limana yürüyüş.</span></li>
-        <li class="hot"><span class="t">18:00</span><span class="what">Feribot: Sakız → Çeşme ⛴️</span><span class="note">Bingo ödül töreni güvertede!</span></li>
-        <li><span class="t">20:30</span><span class="what">Manisa: Spor Kebapçısı 🍢</span><span class="note">Manisa kebabı finali — eve mis gibi kokularla dönüş.</span></li>
+        <li class="hot"><span class="t">11:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Karfas%20Chios" target="_blank" rel="noopener">Karfas</a>'ta son deniz 🏖️</span><span class="note">Plaj zaten evin önünde; duşlar plajda var.</span></li>
+        <li><span class="t">13:30</span><span class="what">Öğle: <a class="geo" href="https://maps.google.com/?q=Karfas%20Chios" target="_blank" rel="noopener">Karfas</a> tavernası</span><span class="note">Mastelo peyniri ızgarası şansı — son fırsat!</span></li>
+        <li><span class="t">15:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Chios%20Town" target="_blank" rel="noopener">Chios Town</a> hediyelik turu 🛍️</span><span class="note">Aplotaria'da damla sakızı, sakızlı kurabiye, sabun; çocuklara küçük hatıralar.</span></li>
+        <li class="hot"><span class="t">16:00</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Kronos%20Ice%20Cream%20Chios" target="_blank" rel="noopener">Kronos</a> finali 🍦</span><span class="note">Son bir sakızlı dondurma — gelenek tamamlanır.</span></li>
+        <li class="hot"><span class="t">16:30</span><span class="what"><a class="geo" href="https://maps.google.com/?q=Neorion%203%20Chios" target="_blank" rel="noopener">Araç iadesi</a> 🚗</span><span class="note">Neorion 3 — sonra limana yürüyüş.</span></li>
+        <li class="hot"><span class="t">18:00</span><span class="what">Feribot: <a class="geo" href="https://maps.google.com/?q=Chios%20Port" target="_blank" rel="noopener">Sakız → Çeşme</a> ⛴️</span><span class="note">Bingo ödül töreni güvertede!</span></li>
+        <li><span class="t">20:30</span><span class="what">Manisa: <a class="geo" href="https://maps.google.com/?q=Spor%20Kebap%20Manisa" target="_blank" rel="noopener">Spor Kebapçısı</a> 🍢</span><span class="note">Manisa kebabı finali — eve mis gibi kokularla dönüş.</span></li>
       </ul>
     </div>
     <div class="flip" data-flip>
@@ -244,6 +251,19 @@
 
 <!-- ================= PANEL: PLAJLAR ================= -->
 <section class="panel" id="panel-beach">
+  <div class="card near-card" id="nearCard">
+    <h4>📍 Yanımda ne var?</h4>
+    <p class="meta">Konumunu bir kez al, her şey en yakından uzağa sıralanır. İnternet gerekmez.</p>
+    <button class="btn citrus" id="nearBtn" type="button">Yakınımdakileri göster</button>
+    <div class="near-filters" id="nearFilters" hidden>
+      <button class="active" data-f="all" type="button">Hepsi</button>
+      <button data-f="beach" type="button">🏖️ Plaj</button>
+      <button data-f="spot" type="button">🏘️ Gezilecek</button>
+      <button data-f="food" type="button">🍽️ Yemek</button>
+    </div>
+    <div class="near-list" id="nearList"></div>
+  </div>
+
   <div class="section-head">
     <span class="kicker">Plaj rehberi</span>
     <h3>Hangi plaj, hangi çocuğa?</h3>
@@ -481,15 +501,17 @@
 
   <div class="card">
     <h4>🍽️ Nerede yiyelim? — bölge bölge</h4>
-    <p class="meta">Gezginlerin ve yerel rehberlerin ortak favorileri. Yine de girmeden Google puanına bir bakın — ada esnafında gün değişebiliyor.</p>
-    <ul>
-      <li><strong>Chios Town:</strong> <a href="https://maps.google.com/?q=Hotzas+Tavern+Chios" target="_blank" rel="noopener">Hotzas</a> — adanın klasiği, her şey el yapımı (yoğurtlu kuzu kebabı meşhur). <a href="https://maps.google.com/?q=The+Pastards+Chios" target="_blank" rel="noopener">The Pastards</a> — liman yakını pizza-makarna; çocuklar için garanti liman.</li>
-      <li><strong>Karfas / Agia Ermioni:</strong> <a href="https://maps.google.com/?q=Bachari+Restaurant+Agia+Ermioni+Chios" target="_blank" rel="noopener">Bachari</a> — koy manzaralı deniz ürünleri; eve 5 dk, "özel akşam" adayı.</li>
-      <li><strong>Komi:</strong> <a href="https://maps.google.com/?q=Likos+Komi+Chios" target="_blank" rel="noopener">Likos</a> — adanın en iyi pizzası + peynirli pide (evet, pide!). Plajda öğle için beach bar'lar da iş görür.</li>
-      <li><strong>Katarraktis</strong> (Komi dönüş yolu): <a href="https://maps.google.com/?q=Meltemaki+Katarraktis+Chios" target="_blank" rel="noopener">Meltemaki</a> — 1997'den beri, masalar denizin dibinde; mastelo dolgulu kalamarı deneyin.</li>
-      <li><strong>Lithi:</strong> <a href="https://maps.google.com/?q=Kyra+Despoina+Lithi+Chios" target="_blank" rel="noopener">Kyra Despoina</a> — 1953'ten beri plajın üstünde; taze balık.</li>
-      <li><strong>Mesta / Olympi:</strong> <a href="https://maps.google.com/?q=Mestousiko+Mesta+Chios" target="_blank" rel="noopener">Mestousiko</a> (Mesta, ızgara) ve Amethistos (Olympi, ev yemekleri). Pyrgi meydanında kahve: Stoa Cafe.</li>
-      <li><strong>Avgonyma</strong> (Anavatos yolu): <a href="https://maps.google.com/?q=To+Asteri+Avgonima+Chios" target="_blank" rel="noopener">To Asteri</a> — Ege'ye bakan terasta öğle; 3. gün Plan A ile birleşir.</li>
+    <p class="meta">İsme dokun, harita açılır. Puanlar Google/Tripadvisor ortalamaları (Temmuz 2026) — yine de kapıda bir göz atın, ada esnafında gün değişir.</p>
+    <ul class="eat">
+      <li><a href="https://maps.google.com/?q=Bachari+Agia+Ermioni+Chios" target="_blank" rel="noopener">Bachari</a> <span class="rate hi">★ 4,6</span><span class="where">Agia Ermioni · eve 5 dk</span>Koy manzaralı deniz ürünleri — "özel akşam" adayı.</li>
+      <li><a href="https://maps.google.com/?q=The+Pastards+Chios" target="_blank" rel="noopener">The Pastards</a> <span class="rate hi">★ 4,6</span><span class="where">Chios Town, liman</span>Pizza & makarna — çocuklarda garanti liman.</li>
+      <li><a href="https://maps.google.com/?q=To+Asteri+Avgonima+Chios" target="_blank" rel="noopener">To Asteri</a> <span class="rate hi">★ 4,5</span><span class="where">Avgonyma · 3. gün Plan A</span>Ege'ye bakan teras; Anavatos yolunun öğle durağı.</li>
+      <li><a href="https://maps.google.com/?q=Hotzas+Tavern+Chios" target="_blank" rel="noopener">Hotzas</a> <span class="rate hi">★ 4,4</span><span class="where">Chios Town</span>Adanın klasiği, her şey el yapımı — yoğurtlu kuzu kebabı meşhur.</li>
+      <li><a href="https://maps.google.com/?q=Kyra+Despoina+Lithi+Chios" target="_blank" rel="noopener">Kyra Despoina</a> <span class="rate">★ 4,2</span><span class="where">Lithi plajı · 3. gün</span>1953'ten beri; taze balık, ayağın kumda.</li>
+      <li><a href="https://maps.google.com/?q=Mestousiko+Mesta+Chios" target="_blank" rel="noopener">Mestousiko</a> <span class="rate">★ 4,0</span><span class="where">Mesta meydanı</span>Izgara + ev yemekleri; labirent turundan sonra.</li>
+      <li><a href="https://maps.google.com/?q=Pizza+Likos+Komi+Chios" target="_blank" rel="noopener">Pizza Likos</a> <span class="rate">★ 4,0</span><span class="where">Komi plajı</span>Pizza ve peynirli pide (evet, pide!) — plaj günü pratik çözüm.</li>
+      <li><a href="https://maps.google.com/?q=Meltemaki+Katarraktis+Chios" target="_blank" rel="noopener">Meltemaki</a><span class="where">Katarraktis · Komi dönüşü</span>1997'den beri masalar denizin dibinde; mastelo dolgulu kalamar.</li>
+      <li><a href="https://maps.google.com/?q=Kronos+Ice+Cream+Chios" target="_blank" rel="noopener">Kronos</a><span class="where">Chios Town 🍦</span>1930'dan beri — sakızlı dondurma burada denenir.</li>
     </ul>
   </div>
 
